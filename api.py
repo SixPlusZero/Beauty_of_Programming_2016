@@ -1,7 +1,9 @@
+#!/usr/bin/python
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import subprocess
 import json
+import main
 
 app = Flask(__name__)
 api = Api(app)
@@ -16,11 +18,10 @@ class BOPRequest(Resource):
         id2 = args['id2'] 
         print "id1@\t", id1
         print "id2@\t", id2
-        cgiResult = subprocess.Popen(["cgi-bin/cgi.py", str(id1), str(id2)],\
-                stdout=subprocess.PIPE).communicate()[0]
-        print "CGIResult: #" + cgiResult + "#"
-        if not cgiResult.startswith("Error: "):
-                return json.loads(cgiResult)
+        cgiResult = main.request(id1, id2)
+        print "CGIResult: #" + str(cgiResult) + "#"
+        if type(cgiResult) != type(""):
+                return json.dumps(cgiResult)
         else:
                 return cgiResult
 
