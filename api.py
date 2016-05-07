@@ -28,4 +28,4 @@ class BOPRequest(Resource):
 api.add_resource(BOPRequest, '/bop')
 
 if __name__ == '__main__':
-    app.run(debug=True, port=80)
+    app.run(debug=True, port=27016)
