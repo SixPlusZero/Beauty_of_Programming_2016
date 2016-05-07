@@ -18,7 +18,7 @@ def calc(num1, num2):
         'orderby': 'CC:desc',
         'attributes': 'Ti,AA.AuN,AA.AfN,Y,D,CC',
     })
-
+    '''
     try:
         conn = httplib.HTTPSConnection('oxfordhk.azure-api.net')
         conn.request("GET", "/academic/v1.0/evaluate?%s" % params, "{body}", headers)
@@ -28,6 +28,6 @@ def calc(num1, num2):
         conn.close()
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
+    '''
     return [[1,2,3,4]]
 
