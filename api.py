@@ -20,10 +20,11 @@ class BOPRequest(Resource):
         print "id2@\t", id2
         cgiResult = main.request(id1, id2)
         print "CGIResult: #" + str(cgiResult) + "#"
-        if type(cgiResult) != type(""):
-                return json.dumps(cgiResult)
-        else:
-                return cgiResult
+        #if type(cgiResult) != type(""):
+        #    return json.dumps(cgiResult)
+        #else:
+        #    return cgiResult
+        return cgiResult
 
 api.add_resource(BOPRequest, '/bop')
 
