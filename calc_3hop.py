@@ -29,5 +29,5 @@ def calc(num1, num2):
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-    return [1,2,3,4]
+    return [[1,2,3,4]]
 
