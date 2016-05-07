@@ -9,7 +9,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('id1', type=int)
 parser.add_argument('id2', type=int)
 
-class HelloWorld(Resource):
+class BOPRequest(Resource):
     def get(self):
         args = parser.parse_args()
         id1 = args['id1']
@@ -24,7 +24,7 @@ class HelloWorld(Resource):
         else:
                 return cgiResult
 
-api.add_resource(HelloWorld, '/bop')
+api.add_resource(BOPRequest, '/bop')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=80)
