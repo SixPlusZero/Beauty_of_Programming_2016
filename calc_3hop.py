@@ -17,8 +17,8 @@ G1 <-> G2 <-> G3 <-> G4
 Q1 = G2,G2:
     G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
   V G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
-    G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
-    G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
+  V G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
+  V G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
     G2->G3->G2->G2: Id -> (AuId AND RId) <- Id' (intersecting AuId)
     Interval results:
     Id1_FCJ, Id1_RId_FCJ, Id1_RId, Id1_RId_AuId, Id1_AuId
@@ -43,7 +43,7 @@ Q3 = G3,G2:
     Id2_FCJ, Id2_RId, Id2_AuId, Id2_AuId_AfId
 
 Q4 = G3,G3:
-    G3->G2->G2->G3: AuId -> (Id AND Id') <- AuId' (intersecting RId)
+  V G3->G2->G2->G3: AuId -> (Id AND Id') <- AuId' (intersecting RId)
     Interval results:
     AuId1_Id
     AuId2_Id_RId
@@ -96,6 +96,9 @@ def G2_G2(entity1, entity2, num1, num2):
     print "G2_G2"
     ret_list = []
 
+    # G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
+    # not possible to get all edges from left to right...
+
     # G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_FCJ = {}
@@ -112,6 +115,22 @@ def G2_G2(entity1, entity2, num1, num2):
     for method_id in FCJ_intersection:
         for RId in Id1_RId_FCJ[method_id]:
             ret_list.append([num1, RId, method_id, num2])
+
+    # G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
+    Id1_RId_RId = {}
+    for old_RId in Id1_RId:
+        RId_RId = send_request(expr=('Id=%s' % str(old_RId)))["entities"][0]["RId"]
+        for new_RId in RId_RId:
+            if Id1_RId_RId.has_key(new_RId) == False:
+                Id1_RId_RId[new_RId] = []
+            Id1_RId_RId[new_RId].append(old_RId)
+
+    for new_RId in Id1_RId_RId.keys():
+        final_RId_list = send_request(expr=('Id=%s' % str(new_RId)))["entities"][0]["RId"]
+        for final_RId in final_RId_list:
+            if final_RId == num2:
+                for Id1_RId in Id1_RId_RId[new_RId]:
+                    ret_list.append([num1, Id1_RId, new_RId, num2])
 
     # G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
     Id1_RId_AuId = {}
@@ -193,4 +212,4 @@ if __name__ == '__main__':
     #num2 = 2126237948 #AuId
     #num1 = 2133990480
     #num2 = 2133990480
-    print calc(2126237948, 2126237948)
+    print calc(2133990480, 2133990480)
