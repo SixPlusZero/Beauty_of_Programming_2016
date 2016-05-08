@@ -3,19 +3,39 @@ import sys
 from sys import argv
 import calc_1hop
 import calc_3hop
+import threading
 
+ret_list_1hop = []
+ret_list_2hop = []
+ret_list_3hop = []
+
+def wrapper_1hop(id1, id2):
+	ret_list_1hop = calc_1hop.calc(id1, id2)
+
+def wrapper_3hop(id1, id2):
+	ret_list_3hop = calc_3hop.calc(id1, id2)
 
 def request(arg1, arg2):
-
-    ret_list = []
 
     try:
         id1 = int(arg1)
         id2 = int(arg2)
     except ValueError:
         return 'Error: Illegal arguments!'
-    ret_list += calc_1hop.calc(id1, id2)
+    t_1hop = threading.Thread(target=wrapper_1hop,args=(id1, id2))
+    t_1hop.start()
+    
+    t_3hop = threading.Thread(target=wrapper_3hop,args=(id1, id2))
+    t_3hop.start()
 
-    ret_list += calc_3hop.calc(id1, id2)
+    t_1hop.join()
+    t_3hop.join()
 
-    return ret_list
+    print "ret_list_1hop:"
+    print ret_list_1hop
+    print "ret_list_2hop:"
+    print ret_list_2hop
+    print "ret_list_3hop:"
+    print ret_list_3hop
+
+    return ret_list_1hop + ret_list_2hop + ret_list_3hop

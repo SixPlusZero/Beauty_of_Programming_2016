@@ -144,10 +144,6 @@ def G3_G3(num1, num2):
     return [[1,2,3,4]]
 
 def calc(num1, num2):
-    #num1 = 2133990480 #Id
-    #num2 = 2126237948 #AuId
-    num1 = 2133990480
-    num2 = 2133990480
     entity1 = send_request(expr=('Id=%s' % str(num1)))
     entity2 = send_request(expr=('Id=%s' % str(num2)))
     
@@ -166,4 +162,8 @@ def calc(num1, num2):
             return G3_G3(num1, num2)
     
 if __name__ == '__main__':
+    #num1 = 2133990480 #Id
+    #num2 = 2126237948 #AuId
+    #num1 = 2133990480
+    #num2 = 2133990480
     print calc(2251253715, 2180737804)
