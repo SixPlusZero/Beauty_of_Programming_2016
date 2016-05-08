@@ -12,7 +12,7 @@ def send_request(params):
         conn.request("GET", "/academic/v1.0/evaluate?%s" % params, "{body}", headers)
         response = conn.getresponse()
         data = response.read()
-        #print(data)
+        print(data)
         conn.close()
     except Exception as e:
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
@@ -30,6 +30,7 @@ def check_id_id(id1, id2):
     })
     dataset = eval(send_request(params))["entities"]
     if (len(dataset) == 0): return 0
+    if (not dataset[0].has_key("RId")): return 0
     RIdList = dataset[0]["RId"]
     if (len(RIdList) == 0): return 0
     for key in RIdList:
@@ -48,6 +49,7 @@ def check_id_auid(id1, id2):
     })
     dataset = eval(send_request(params))["entities"]
     if (len(dataset) == 0): return 0
+    if (not dataset[0].has_key("AA")): return 0
     AuIdList = dataset[0]["AA"]
     if (len(AuIdList) == 0): return 0
     for key in AuIdList:
@@ -64,4 +66,4 @@ def calc(id1, id2):
         return []
 
 if __name__ == '__main__':
-    print calc(1, 2)
+    print calc(2251253715, 2180737804)
