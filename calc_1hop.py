@@ -58,7 +58,6 @@ def calc(id1, id2):
         return [[id1, id2]]
     else:
         return []
-'''
+
 if __name__ == '__main__':
-    print calc(2028818097, 2077695977)
-'''
+    print calc(1, 2)
