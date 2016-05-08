@@ -16,7 +16,7 @@ G1 <-> G2 <-> G3 <-> G4
 
 Q1 = G2,G2:
     G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
-    G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
+  V G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
     G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
     G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
     G2->G3->G2->G2: Id -> (AuId AND RId) <- Id' (intersecting AuId)
@@ -112,6 +112,23 @@ def G2_G2(num1, num2):
     for method_id in FCJ_intersection:
         for RId in Id1_RId_FCJ[method_id]:
             ret_list.append([num1, RId, method_id, num2])
+
+    # G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
+    Id1_RId_AuId = {}
+    for RId in Id1_RId:
+        RId_AuId = [AA_elem["AuId"] for AA_elem in send_request(expr=('Id=%s' % str(RId)))["entities"][0]["AA"]]
+        for AuId in RId_AuId:
+            if Id1_RId_AuId.has_key(AuId) == False:
+                Id1_RId_AuId[AuId] = []
+            Id1_RId_AuId[AuId].append(RId)
+    Id2_AuId = [AA_elem["AuId"] for AA_elem in send_request(expr=('Id=%s' % str(num2)))["entities"][0]["AA"]]
+
+    AuId_intersection = list(set(Id1_RId_AuId.keys()).intersection(set(Id2_AuId)))
+
+    for AuId in AuId_intersection:
+        for RId in Id1_RId_AuId[AuId]:
+            ret_list.append([num1, RId, AuId, num2])
+
     return ret_list
 
 def G2_G3(num1, num2):
@@ -129,8 +146,8 @@ def G3_G3(num1, num2):
 def calc(num1, num2):
     #num1 = 2133990480 #Id
     #num2 = 2126237948 #AuId
-    #num1 = 2133990480
-    #num2 = 2133990480
+    num1 = 2133990480
+    num2 = 2133990480
     entity1 = send_request(expr=('Id=%s' % str(num1)))
     entity2 = send_request(expr=('Id=%s' % str(num2)))
     
@@ -141,10 +158,12 @@ def calc(num1, num2):
         if entity2["entities"][0].has_key("AA"):
             return G2_G2(num1, num2)
         else:
-            return G2_G3(num1, num2, reversed=False)
+            return G2_G3(num1, num2)
     else:
         if entity2["entities"][0].has_key("AA"):
-            return G2_G3(num1, num2, reversed=True)
+            return G3_G2(num1, num2)
         else:
             return G3_G3(num1, num2)
     
+if __name__ == '__main__':
+    print calc(2251253715, 2180737804)
