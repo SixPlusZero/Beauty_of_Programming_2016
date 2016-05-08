@@ -4,7 +4,6 @@ import json
 import threading
 import calc_3hop_G2_G2
 import calc_3hop_G2_G3
-import calc_3hop_G3_G2
 import calc_3hop_G3_G3
 import calc_3hop_utils
 
@@ -38,11 +37,11 @@ def calc(num1, num2):
             return calc_3hop_G2_G2.G2_G2(entity1, entity2, num1, num2)
         else:
             entity2 = calc_3hop_utils.getdata("newentity2")
-            return calc_3hop_G2_G3.G2_G3(entity1, entity2, num1, num2)
+            return calc_3hop_G2_G3.G2_G3(entity1, entity2, num1, num2, reverse_out=False)
     else:
         entity1 = calc_3hop_utils.getdata("newentity1")
         if entity2["entities"][0].has_key("AA"):
-            return calc_3hop_G3_G2.G3_G2(entity1, entity2, num1, num2)
+            return calc_3hop_G2_G3.G2_G3(entity2, entity1, num2, num1, reverse_out=True)
         else:
             entity2 = calc_3hop_utils.getdata("newentity2")
             return calc_3hop_G3_G3.G3_G3(entity1, entity2, num1, num2)
@@ -52,4 +51,4 @@ if __name__ == '__main__':
     #num2 = 2126237948 #AuId
     #num1 = 2133990480
     #num2 = 2133990480
-    print calc(2133990480, 2133990480)
+    print calc(2126237948, 2133990480)

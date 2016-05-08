@@ -15,7 +15,7 @@ Q4 = G3,G3:
 ret_list_3hop_G3_G3_1 = []
 
 def G3_G3_1(entity1, entity2, num1, num2):
-    ret_list = []
+    global ret_list_3hop_G3_G3_1
 
     # G3->G2->G2->G3: AuId -> (Id AND Id') <- AuId' (intersecting RId)
     AuId1_Id = [entity["Id"] for entity in entity1["entities"]]
@@ -35,13 +35,7 @@ def G3_G3_1(entity1, entity2, num1, num2):
 
     for RId in RId_intersection:
         for Id in AuId1_Id_RId[RId]:
-            ret_list.append([num1, Id, RId, num2])
-    
-    return ret_list
-
-def wrapper_3hop_G3_G3_1(entity1, entity2, num1, num2):
-    global ret_list_3hop_G3_G3_1
-    ret_list_3hop_G3_G3_1 = G3_G3_1(entity1, entity2, num1, num2)
+            ret_list_3hop_G3_G3_1.append([num1, Id, RId, num2])
 
 def G3_G3(entity1, entity2, num1, num2):
     '''
@@ -51,7 +45,7 @@ def G3_G3(entity1, entity2, num1, num2):
     print "G3_G3"
     ret_list = []
 
-    t_hop3_G3_G3_1 = threading.Thread(target=wrapper_3hop_G3_G3_1,args=(entity1, entity2, num1, num2))
+    t_hop3_G3_G3_1 = threading.Thread(target=G3_G3_1,args=(entity1, entity2, num1, num2))
     t_hop3_G3_G3_1.start()
     
     t_hop3_G3_G3_1.join()

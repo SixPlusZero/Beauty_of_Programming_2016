@@ -6,7 +6,7 @@ import calc_3hop_utils
 
 '''
 Q1 = G2,G2:
-1 ? G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
+1 V G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
 2 V G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
 3 V G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
 4 V G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
@@ -24,7 +24,7 @@ ret_list_3hop_G2_G2_5 = []
 
 def G2_G2_1(entity1, entity2, num1, num2):
     # G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
-    ret_list = []
+    global ret_list_3hop_G2_G2_1
 
     Id1_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity1)
     Id1_FCJ_Id = {}
@@ -57,13 +57,12 @@ def G2_G2_1(entity1, entity2, num1, num2):
         for final_RId in final_RId_list:
             if final_RId == num2:
                 for Id1_FCJ in Id1_FCJ_Id[new_Id]:
-                    ret_list.append([num1, Id1_FCJ, new_Id, num2])
+                    ret_list_3hop_G2_G2_1.append([num1, Id1_FCJ, new_Id, num2])
     print "G2_G2_1 finished"
-    return ret_list
 
 def G2_G2_2(entity1, entity2, num1, num2):
     # G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
-    ret_list = []
+    global ret_list_3hop_G2_G2_2
 
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_FCJ = {}
@@ -83,14 +82,13 @@ def G2_G2_2(entity1, entity2, num1, num2):
 
     for method_id in FCJ_intersection:
         for RId in Id1_RId_FCJ[method_id]:
-            ret_list.append([num1, RId, method_id, num2])
+            ret_list_3hop_G2_G2_2.append([num1, RId, method_id, num2])
     
     print "G2_G2_2 finished"
-    return ret_list
 
 def G2_G2_3(entity1, entity2, num1, num2):
     # G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
-    ret_list = []
+    global ret_list_3hop_G2_G2_3
 
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_RId = {}
@@ -114,13 +112,12 @@ def G2_G2_3(entity1, entity2, num1, num2):
         for final_RId in final_RId_list:
             if final_RId == num2:
                 for Id1_RId in Id1_RId_RId[new_RId]:
-                    ret_list.append([num1, Id1_RId, new_RId, num2])
+                    ret_list_3hop_G2_G2_3.append([num1, Id1_RId, new_RId, num2])
     print "G2_G2_3 finished"
-    return ret_list
 
 def G2_G2_4(entity1, entity2, num1, num2):
     # G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
-    ret_list = []
+    global ret_list_3hop_G2_G2_4
 
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_AuId = {}
@@ -140,13 +137,12 @@ def G2_G2_4(entity1, entity2, num1, num2):
 
     for AuId in AuId_intersection:
         for RId in Id1_RId_AuId[AuId]:
-            ret_list.append([num1, RId, AuId, num2])
+            ret_list_3hop_G2_G2_4.append([num1, RId, AuId, num2])
     print "G2_G2_4 finished"
-    return ret_list
 
 def G2_G2_5(entity1, entity2, num1, num2):
     # G2->G3->G2->G2: Id -> (AuId AND RId) <- Id' (intersecting AuId)
-    ret_list = []
+    global ret_list_3hop_G2_G2_5
 
     Id1_AuId = [AA_elem["AuId"] for AA_elem in entity1["entities"][0]["AA"]]
     Id1_AuId_Id = {}
@@ -171,29 +167,8 @@ def G2_G2_5(entity1, entity2, num1, num2):
         for final_RId in final_RId_list:
             if final_RId == num2:
                 for Id1_AuId in Id1_AuId_Id[new_Id]:
-                    ret_list.append([num1, Id1_AuId, new_Id, num2])
+                    ret_list_3hop_G2_G2_5.append([num1, Id1_AuId, new_Id, num2])
     print "G2_G2_5 finished"
-    return ret_list
-
-def wrapper_3hop_G2_G2_1(entity1, entity2, num1, num2):
-    global ret_list_3hop_G2_G2_1
-    ret_list_3hop_G2_G2_1 = G2_G2_1(entity1, entity2, num1, num2)
-
-def wrapper_3hop_G2_G2_2(entity1, entity2, num1, num2):
-    global ret_list_3hop_G2_G2_2
-    ret_list_3hop_G2_G2_2 = G2_G2_2(entity1, entity2, num1, num2)
-
-def wrapper_3hop_G2_G2_3(entity1, entity2, num1, num2):
-    global ret_list_3hop_G2_G2_3
-    ret_list_3hop_G2_G2_3 = G2_G2_3(entity1, entity2, num1, num2)
-
-def wrapper_3hop_G2_G2_4(entity1, entity2, num1, num2):
-    global ret_list_3hop_G2_G2_4
-    ret_list_3hop_G2_G2_4 = G2_G2_4(entity1, entity2, num1, num2)
-
-def wrapper_3hop_G2_G2_5(entity1, entity2, num1, num2):
-    global ret_list_3hop_G2_G2_5
-    ret_list_3hop_G2_G2_5 = G2_G2_5(entity1, entity2, num1, num2)
 
 def G2_G2(entity1, entity2, num1, num2):
     '''
@@ -201,20 +176,19 @@ def G2_G2(entity1, entity2, num1, num2):
     Id2_RId_FCJ, Id2_FCJ, Id2_RId_RId, Id2_AuId, Id2_RId_AuId
     '''
     print "G2_G2"
-    ret_list = []
 
-    #t_hop3_G2_G2_1 = threading.Thread(target=wrapper_3hop_G2_G2_1,args=(entity1, entity2, num1, num2))
-    #t_hop3_G2_G2_1.start()
-    t_hop3_G2_G2_2 = threading.Thread(target=wrapper_3hop_G2_G2_2,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_1 = threading.Thread(target=G2_G2_1,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_1.start()
+    t_hop3_G2_G2_2 = threading.Thread(target=G2_G2_2,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_2.start()
-    t_hop3_G2_G2_3 = threading.Thread(target=wrapper_3hop_G2_G2_3,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_3 = threading.Thread(target=G2_G2_3,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_3.start()
-    t_hop3_G2_G2_4 = threading.Thread(target=wrapper_3hop_G2_G2_4,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_4 = threading.Thread(target=G2_G2_4,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_4.start()
-    t_hop3_G2_G2_5 = threading.Thread(target=wrapper_3hop_G2_G2_5,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_5 = threading.Thread(target=G2_G2_5,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_5.start()
 
-    #t_hop3_G2_G2_1.join()
+    t_hop3_G2_G2_1.join()
     t_hop3_G2_G2_2.join()
     t_hop3_G2_G2_3.join()
     t_hop3_G2_G2_4.join()
