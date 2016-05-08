@@ -16,16 +16,50 @@ Q1 = G2,G2:
     Id2_RId_FCJ, Id2_FCJ, Id2_RId_RId, Id2_AuId, Id2_RId_AuId
 '''
 
-ret_list_3hop_1 = []
-ret_list_3hop_2 = []
-ret_list_3hop_3 = []
-ret_list_3hop_4 = []
-ret_list_3hop_5 = []
+ret_list_3hop_G2_G2_1 = []
+ret_list_3hop_G2_G2_2 = []
+ret_list_3hop_G2_G2_3 = []
+ret_list_3hop_G2_G2_4 = []
+ret_list_3hop_G2_G2_5 = []
 
 def G2_G2_1(entity1, entity2, num1, num2):
     # G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
-    # not possible to get all edges from left to right...
-    return
+    ret_list = []
+
+    Id1_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity1)
+    Id1_FCJ_Id = {}
+    for i in range(len(Id1_FCJ)):
+        calc_3hop_utils.send_request(
+            {"expr":('Composite(F.FId=%d)' % Id1_FCJ[i]),"target":("G2_G2_1_FCJ_Id_F_%d" % i)})
+        calc_3hop_utils.send_request(
+            {"expr":('Composite(C.CId=%d)' % Id1_FCJ[i]),"target":("G2_G2_1_FCJ_Id_C_%d" % i)})
+        calc_3hop_utils.send_request(
+            {"expr":('Composite(J.JId=%d)' % Id1_FCJ[i]),"target":("G2_G2_1_FCJ_Id_J_%d" % i)})
+            
+    for i in range(len(Id1_FCJ)):
+        FCJ = Id1_FCJ[i]
+        FCJ_Id = \
+        [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_1_FCJ_Id_F_%d" % i)["entities"]] + \
+        [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_1_FCJ_Id_C_%d" % i)["entities"]] + \
+        [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_1_FCJ_Id_J_%d" % i)["entities"]]
+        for new_Id in FCJ_Id:
+            if Id1_FCJ_Id.has_key(new_Id) == False:
+                Id1_FCJ_Id[new_Id] = []
+            Id1_FCJ_Id[new_Id].append(FCJ)
+
+    Id1_FCJ_Id_keys = Id1_FCJ_Id.keys()
+    for i in range(len(Id1_FCJ_Id_keys)):
+        calc_3hop_utils.send_request(
+            {"expr":('Id=%d' % Id1_FCJ_Id_keys[i]), "target":("G2_G2_1_final_RId_list_%d" % i)})
+    for i in range(len(Id1_FCJ_Id_keys)):
+        new_Id = Id1_FCJ_Id_keys[i]
+        final_RId_list = calc_3hop_utils.getdata("G2_G2_1_final_RId_list_%d" % i)["entities"][0]["RId"]
+        for final_RId in final_RId_list:
+            if final_RId == num2:
+                for Id1_FCJ in Id1_FCJ_Id[new_Id]:
+                    ret_list.append([num1, Id1_FCJ, new_Id, num2])
+    print "G2_G2_1 finished"
+    return ret_list
 
 def G2_G2_2(entity1, entity2, num1, num2):
     # G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
@@ -141,21 +175,25 @@ def G2_G2_5(entity1, entity2, num1, num2):
     print "G2_G2_5 finished"
     return ret_list
 
-def wrapper_3hop_2(entity1, entity2, num1, num2):
-    global ret_list_3hop_2
-    ret_list_3hop_2 = G2_G2_2(entity1, entity2, num1, num2)
+def wrapper_3hop_G2_G2_1(entity1, entity2, num1, num2):
+    global ret_list_3hop_G2_G2_1
+    ret_list_3hop_G2_G2_1 = G2_G2_1(entity1, entity2, num1, num2)
 
-def wrapper_3hop_3(entity1, entity2, num1, num2):
-    global ret_list_3hop_3
-    ret_list_3hop_3 = G2_G2_3(entity1, entity2, num1, num2)
+def wrapper_3hop_G2_G2_2(entity1, entity2, num1, num2):
+    global ret_list_3hop_G2_G2_2
+    ret_list_3hop_G2_G2_2 = G2_G2_2(entity1, entity2, num1, num2)
 
-def wrapper_3hop_4(entity1, entity2, num1, num2):
-    global ret_list_3hop_4
-    ret_list_3hop_4 = G2_G2_4(entity1, entity2, num1, num2)
+def wrapper_3hop_G2_G2_3(entity1, entity2, num1, num2):
+    global ret_list_3hop_G2_G2_3
+    ret_list_3hop_G2_G2_3 = G2_G2_3(entity1, entity2, num1, num2)
 
-def wrapper_3hop_5(entity1, entity2, num1, num2):
-    global ret_list_3hop_5
-    ret_list_3hop_5 = G2_G2_5(entity1, entity2, num1, num2)
+def wrapper_3hop_G2_G2_4(entity1, entity2, num1, num2):
+    global ret_list_3hop_G2_G2_4
+    ret_list_3hop_G2_G2_4 = G2_G2_4(entity1, entity2, num1, num2)
+
+def wrapper_3hop_G2_G2_5(entity1, entity2, num1, num2):
+    global ret_list_3hop_G2_G2_5
+    ret_list_3hop_G2_G2_5 = G2_G2_5(entity1, entity2, num1, num2)
 
 def G2_G2(entity1, entity2, num1, num2):
     '''
@@ -165,18 +203,25 @@ def G2_G2(entity1, entity2, num1, num2):
     print "G2_G2"
     ret_list = []
 
-    t_hop3_2 = threading.Thread(target=wrapper_3hop_2,args=(entity1, entity2, num1, num2))
-    t_hop3_2.start()
-    t_hop3_3 = threading.Thread(target=wrapper_3hop_3,args=(entity1, entity2, num1, num2))
-    t_hop3_3.start()
-    t_hop3_4 = threading.Thread(target=wrapper_3hop_4,args=(entity1, entity2, num1, num2))
-    t_hop3_4.start()
-    t_hop3_5 = threading.Thread(target=wrapper_3hop_5,args=(entity1, entity2, num1, num2))
-    t_hop3_5.start()
+    #t_hop3_G2_G2_1 = threading.Thread(target=wrapper_3hop_G2_G2_1,args=(entity1, entity2, num1, num2))
+    #t_hop3_G2_G2_1.start()
+    t_hop3_G2_G2_2 = threading.Thread(target=wrapper_3hop_G2_G2_2,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_2.start()
+    t_hop3_G2_G2_3 = threading.Thread(target=wrapper_3hop_G2_G2_3,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_3.start()
+    t_hop3_G2_G2_4 = threading.Thread(target=wrapper_3hop_G2_G2_4,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_4.start()
+    t_hop3_G2_G2_5 = threading.Thread(target=wrapper_3hop_G2_G2_5,args=(entity1, entity2, num1, num2))
+    t_hop3_G2_G2_5.start()
 
-    t_hop3_2.join()
-    t_hop3_3.join()
-    t_hop3_4.join()
-    t_hop3_5.join()
+    #t_hop3_G2_G2_1.join()
+    t_hop3_G2_G2_2.join()
+    t_hop3_G2_G2_3.join()
+    t_hop3_G2_G2_4.join()
+    t_hop3_G2_G2_5.join()
 
-    return ret_list_3hop_2 + ret_list_3hop_3 + ret_list_3hop_4 + ret_list_3hop_5
+    return ret_list_3hop_G2_G2_1 + \
+           ret_list_3hop_G2_G2_2 + \
+           ret_list_3hop_G2_G2_3 + \
+           ret_list_3hop_G2_G2_4 + \
+           ret_list_3hop_G2_G2_5
