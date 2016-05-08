@@ -2,35 +2,43 @@
 import httplib, urllib, base64
 import json
 import threading
+from Queue import Queue
+
+max_request_num = 200
+
+datapool = {}
 
 headers = {
     'Ocp-Apim-Subscription-Key': 'f7cc29509a8443c5b3a5e56b0e38b5a6',
 }
 
-def send_request(
-    expr='Id=0',
-    count='100',
-    offset='0',
-    orderby='Id:asc',
-    attributes='Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'):
-    params_str = urllib.urlencode({
-        'expr': str(expr),
-        'count': str(count),
-        'offset': str(offset),
-        'orderby': str(orderby),
-        'attributes': str(attributes)
-    })
-    data = []
-    try:
-        conn = httplib.HTTPSConnection('oxfordhk.azure-api.net')
-        conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
-        response = conn.getresponse()
-        data = response.read()
-        conn.close()
-    except Exception as e:
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
+def doWork():
+    while True:
+        bundle = q.get()
+        
+        expr = bundle["expr"]
+        target = bundle["target"]
+        params_str = urllib.urlencode({
+            'expr': str(expr),
+            'count': '100',
+            'offset': '0',
+            'orderby': 'Id:asc',
+            'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
+        })
+        data = []
+        try:
+            conn = httplib.HTTPSConnection('oxfordhk.azure-api.net')
+            conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
+            response = conn.getresponse()
+            data = response.read()
+            conn.close()
+        except Exception as e:
+            print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
-    return json.loads(data)
+        #return json.loads(data)
+        datapool[target] = json.loads(data)
+
+        q.task_done()
 
 def FCJ_by_IdEntity(entity):
     Id_FCJ = []
@@ -42,3 +50,19 @@ def FCJ_by_IdEntity(entity):
         Id_FCJ.append(entity["entities"][0]["J"]["JId"])
     return Id_FCJ
 
+def clear_datapool():
+    global datapool
+    datapool = {}
+
+def getdata(datakey):
+    q.join()
+    return datapool[datakey]
+
+q = Queue(max_request_num * 2)
+for i in range(max_request_num):
+    t = threading.Thread(target=doWork)
+    t.start()
+
+def send_request(bundle):
+    q.put(bundle)
+    
