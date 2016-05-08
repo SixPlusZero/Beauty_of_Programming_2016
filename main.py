@@ -10,9 +10,11 @@ ret_list_2hop = []
 ret_list_3hop = []
 
 def wrapper_1hop(id1, id2):
+	global ret_list_1hop
 	ret_list_1hop = calc_1hop.calc(id1, id2)
 
 def wrapper_3hop(id1, id2):
+	global ret_list_3hop
 	ret_list_3hop = calc_3hop.calc(id1, id2)
 
 def request(arg1, arg2):
