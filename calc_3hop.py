@@ -63,7 +63,7 @@ def G3_G3(entity1, entity2, num1, num2):
     AuId2_Id = [entity["Id"] for entity in entity2["entities"]]
     AuId1_Id_RId = {}
     for Id in AuId1_Id:
-        calc_3hop_utils.send_request({"expr":('Id=%s' % str(Id)), "target":"G3_G3_IdRId"})
+        calc_3hop_utils.send_request({"expr":('Id=%d' % Id), "target":"G3_G3_IdRId"})
         Id_RId = calc_3hop_utils.getdata("G3_G3_IdRId")["entities"][0]["RId"]
         for RId in Id_RId:
             if AuId1_Id_RId.has_key(RId) == False:
@@ -81,10 +81,10 @@ def G3_G3(entity1, entity2, num1, num2):
 def calc(num1, num2):
     calc_3hop_utils.clear_datapool()
 
-    calc_3hop_utils.send_request({"expr":('Id=%s' % str(num1)), "target":"entity1"})
-    calc_3hop_utils.send_request({"expr":('Id=%s' % str(num2)), "target":"entity2"})
-    calc_3hop_utils.send_request({"expr":('Composite(AA.AuId=%s)' % str(num1)), "target":"newentity1"})
-    calc_3hop_utils.send_request({"expr":('Composite(AA.AuId=%s)' % str(num2)), "target":"newentity2"})
+    calc_3hop_utils.send_request({"expr":('Id=%d' % num1), "target":"entity1"})
+    calc_3hop_utils.send_request({"expr":('Id=%d' % num2), "target":"entity2"})
+    calc_3hop_utils.send_request({"expr":('Composite(AA.AuId=%d)' % num1), "target":"newentity1"})
+    calc_3hop_utils.send_request({"expr":('Composite(AA.AuId=%d)' % num2), "target":"newentity2"})
     
     entity1 = calc_3hop_utils.getdata("entity1")
     entity2 = calc_3hop_utils.getdata("entity2")
