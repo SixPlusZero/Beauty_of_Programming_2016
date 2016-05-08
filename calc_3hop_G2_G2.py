@@ -47,6 +47,7 @@ def G2_G2_2(entity1, entity2, num1, num2):
         for RId in Id1_RId_FCJ[method_id]:
             ret_list.append([num1, RId, method_id, num2])
     
+    print "G2_G2_2 finished"
     return ret_list
 
 def G2_G2_3(entity1, entity2, num1, num2):
@@ -68,6 +69,7 @@ def G2_G2_3(entity1, entity2, num1, num2):
             if final_RId == num2:
                 for Id1_RId in Id1_RId_RId[new_RId]:
                     ret_list.append([num1, Id1_RId, new_RId, num2])
+    print "G2_G2_3 finished"
     return ret_list
 
 def G2_G2_4(entity1, entity2, num1, num2):
@@ -89,6 +91,7 @@ def G2_G2_4(entity1, entity2, num1, num2):
     for AuId in AuId_intersection:
         for RId in Id1_RId_AuId[AuId]:
             ret_list.append([num1, RId, AuId, num2])
+    print "G2_G2_4 finished"
     return ret_list
 
 def G2_G2_5(entity1, entity2, num1, num2):
@@ -110,6 +113,7 @@ def G2_G2_5(entity1, entity2, num1, num2):
             if final_RId == num2:
                 for Id1_AuId in Id1_AuId_Id[new_Id]:
                     ret_list.append([num1, Id1_AuId, new_Id, num2])
+    print "G2_G2_5 finished"
     return ret_list
 
 def wrapper_3hop_2(entity1, entity2, num1, num2):
