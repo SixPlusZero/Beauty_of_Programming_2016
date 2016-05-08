@@ -134,6 +134,9 @@ def calc(num1, num2):
     entity1 = send_request(expr=('Id=%s' % str(num1)))
     entity2 = send_request(expr=('Id=%s' % str(num2)))
     
+    if len(entity1["entities"]) == 0 or len(entity2["entities"]) == 0:
+        return []
+
     if entity1["entities"][0].has_key("AA"):
         if entity2["entities"][0].has_key("AA"):
             return G2_G2(num1, num2)
