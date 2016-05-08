@@ -28,7 +28,9 @@ def check_id_id(id1, id2):
 #        'orderby': 'CC:desc',
         'attributes': 'RId',
     })
-    RIdList = eval(send_request(params))["entities"][0]["RId"]
+    dataset = eval(send_request(params))["entities"]
+    if (len(dataset) == 0): return 0
+    RIdList = dataset[0]["RId"]
     if (len(RIdList) == 0): return 0
     for key in RIdList:
         if (key == id2): return 1
@@ -44,7 +46,9 @@ def check_id_auid(id1, id2):
 #        'orderby': 'CC:desc',
         'attributes': 'AA.AuId',
     })
-    AuIdList = eval(send_request(params))["entities"][0]["AA"]
+    dataset = eval(send_request(params))["entities"]
+    if (len(dataset) == 0): return 0
+    AuIdList = dataset[0]["AA"]
     if (len(AuIdList) == 0): return 0
     for key in AuIdList:
         if (key["AuId"] == id2): return 1
