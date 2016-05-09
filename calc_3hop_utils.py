@@ -4,7 +4,7 @@ import json
 import threading
 from Queue import Queue
 
-max_request_num = 300
+max_request_num = 200
 
 datapool = {}
 

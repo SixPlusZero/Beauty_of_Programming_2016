@@ -3,7 +3,7 @@ import threading
 import json
 from Queue import Queue
 
-max_request_num = 300
+max_request_num = 200
 datapool = {}
 headers = {
     'Ocp-Apim-Subscription-Key': 'f7cc29509a8443c5b3a5e56b0e38b5a6',
