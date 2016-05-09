@@ -54,12 +54,14 @@ def G2_G2_1(entity1, entity2, num1, num2):
             {"expr":('Id=%d' % Id1_FCJ_Id_keys[i]), "target":("G2_G2_1_final_RId_list_%d" % i)})
     for i in range(len(Id1_FCJ_Id_keys)):
         new_Id = Id1_FCJ_Id_keys[i]
-        if len(calc_3hop_utils.getdata("G2_G2_1_final_RId_list_%d" % i)["entities"]) > 0:
+        try:
             final_RId_list = calc_3hop_utils.getdata("G2_G2_1_final_RId_list_%d" % i)["entities"][0]["RId"]
             for final_RId in final_RId_list:
                 if final_RId == num2:
                     for Id1_FCJ in Id1_FCJ_Id[new_Id]:
                         ret_list_3hop_G2_G2_1.append([num1, Id1_FCJ, new_Id, num2])
+        except:
+            continue
     print "G2_G2_1 finished"
 
 def G2_G2_2(entity1, entity2, num1, num2):
@@ -100,12 +102,14 @@ def G2_G2_3(entity1, entity2, num1, num2):
         calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G2_3_RId_RId_%d" % i)})
     for i in range(len(Id1_RId)):
         old_RId = Id1_RId[i]
-        if len(calc_3hop_utils.getdata("G2_G2_3_RId_RId_%d" % i)["entities"]) > 0:
+        try:
             RId_RId = calc_3hop_utils.getdata("G2_G2_3_RId_RId_%d" % i)["entities"][0]["RId"]
             for new_RId in RId_RId:
                 if Id1_RId_RId.has_key(new_RId) == False:
                     Id1_RId_RId[new_RId] = []
                 Id1_RId_RId[new_RId].append(old_RId)
+        except:
+            continue
 
     Id1_RId_RId_keys = Id1_RId_RId.keys()
     for i in range(len(Id1_RId_RId_keys)):
@@ -113,12 +117,14 @@ def G2_G2_3(entity1, entity2, num1, num2):
             {"expr":('Id=%d' % Id1_RId_RId_keys[i]), "target":("G2_G2_3_final_RId_list_%d" % i)})
     for i in range(len(Id1_RId_RId_keys)):
         new_RId = Id1_RId_RId_keys[i]
-        if len(calc_3hop_utils.getdata("G2_G2_3_final_RId_list_%d" % i)["entities"]) > 0:
+        try:
             final_RId_list = calc_3hop_utils.getdata("G2_G2_3_final_RId_list_%d" % i)["entities"][0]["RId"]
             for final_RId in final_RId_list:
                 if final_RId == num2:
                     for Id1_RId in Id1_RId_RId[new_RId]:
                         ret_list_3hop_G2_G2_3.append([num1, Id1_RId, new_RId, num2])
+        except:
+            continue
     print "G2_G2_3 finished"
 
 def G2_G2_4(entity1, entity2, num1, num2):
@@ -133,11 +139,15 @@ def G2_G2_4(entity1, entity2, num1, num2):
         calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G2_4_RId_AuId_%d" % i)})
     for i in range(len(Id1_RId)):
         RId = Id1_RId[i]
-        RId_AuId = [AA_elem["AuId"] for AA_elem in calc_3hop_utils.getdata("G2_G2_4_RId_AuId_%d" % i)["entities"][0]["AA"]]
-        for AuId in RId_AuId:
-            if Id1_RId_AuId.has_key(AuId) == False:
-                Id1_RId_AuId[AuId] = []
-            Id1_RId_AuId[AuId].append(RId)
+        try:
+            RId_AuId = [AA_elem["AuId"] for AA_elem in calc_3hop_utils.getdata("G2_G2_4_RId_AuId_%d" % i)["entities"][0]["AA"]]
+            for AuId in RId_AuId:
+                if Id1_RId_AuId.has_key(AuId) == False:
+                    Id1_RId_AuId[AuId] = []
+                Id1_RId_AuId[AuId].append(RId)
+        except:
+            continue
+
     Id2_AuId = [AA_elem["AuId"] for AA_elem in entity2["entities"][0]["AA"]]
 
     AuId_intersection = list(set(Id1_RId_AuId.keys()).intersection(set(Id2_AuId)))
@@ -171,12 +181,15 @@ def G2_G2_5(entity1, entity2, num1, num2):
             {"expr":('Id=%d' % Id1_AuId_Id_keys[i]), "target":("G2_G2_5_final_RId_list_%d" % i)})
     for i in range(len(Id1_AuId_Id_keys)):
         new_Id = Id1_AuId_Id_keys[i]
-        if len(calc_3hop_utils.getdata("G2_G2_5_final_RId_list_%d" % i)["entities"]) > 0:
+        try:
             final_RId_list = calc_3hop_utils.getdata("G2_G2_5_final_RId_list_%d" % i)["entities"][0]["RId"]
             for final_RId in final_RId_list:
                 if final_RId == num2:
                     for Id1_AuId in Id1_AuId_Id[new_Id]:
                         ret_list_3hop_G2_G2_5.append([num1, Id1_AuId, new_Id, num2])
+        except:
+            continue
+            
     print "G2_G2_5 finished"
 
 def G2_G2(entity1, entity2, num1, num2):

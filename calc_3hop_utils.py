@@ -4,7 +4,7 @@ import json
 import threading
 from Queue import Queue
 
-max_request_num = 300
+max_request_num = 400
 
 datapool = {}
 
@@ -20,7 +20,7 @@ def doWork():
         target = bundle["target"]
         params_str = urllib.urlencode({
             'expr': str(expr),
-            'count': '500',
+            'count': '1000',
             'offset': '0',
             'orderby': 'Id:asc',
             'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
