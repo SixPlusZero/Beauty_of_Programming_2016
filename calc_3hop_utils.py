@@ -4,7 +4,7 @@ import json
 import threading
 from Queue import Queue
 
-max_request_num = 500
+max_request_num = 300
 
 datapool = {}
 
@@ -20,7 +20,7 @@ def doWork():
         target = bundle["target"]
         params_str = urllib.urlencode({
             'expr': str(expr),
-            'count': '1000',
+            'count': '2000',
             'offset': '0',
             'orderby': 'Id:asc',
             'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
@@ -36,7 +36,8 @@ def doWork():
                 conn.close()
                 break
             except Exception as e:
-                print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                #print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                print params_str
                 continue
 
         #return json.loads(data)

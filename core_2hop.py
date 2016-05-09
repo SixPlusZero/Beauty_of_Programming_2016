@@ -3,7 +3,7 @@ import threading
 import json
 from Queue import Queue
 
-max_request_num = 200
+max_request_num = 300
 datapool = {}
 headers = {
     'Ocp-Apim-Subscription-Key': 'f7cc29509a8443c5b3a5e56b0e38b5a6',
@@ -22,14 +22,18 @@ def handle_request():
             'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,RId'
         })
         data = []
-        try:
-            conn = httplib.HTTPSConnection('oxfordhk.azure-api.net')
-            conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
-            response = conn.getresponse()
-            data = response.read()
-            conn.close()
-        except Exception as e:
-            print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        while True:
+            try:
+                conn = httplib.HTTPSConnection('oxfordhk.azure-api.net', timeout=5)
+                conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
+                response = conn.getresponse()
+                data = response.read()
+                conn.close()
+                break
+            except Exception as e:
+                #print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                print params_str
+                continue
 
         #print data
         #return json.loads(data)
