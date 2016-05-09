@@ -27,7 +27,7 @@ def check_type(id1, id2, l1, l2, N, sN):
 def e_id_auid_id(id1, id2, d1, d2):
     t1 = time.time()
     ans = []
-    ans += check_type(id1, id2, d1, d2, 'AA', 'AuId')
+    ans.append(check_type(id1, id2, d1, d2, 'AA', 'AuId'))
     t2 = time.time()
     print "e_id_auid_id", t2 - t1, "sec(s)"
     return ans
@@ -35,9 +35,9 @@ def e_id_auid_id(id1, id2, d1, d2):
 def e_id_fcjid_id(id1, id2, d1, d2):
     t1 = time.time()
     ans = []
-    ans += check_type(id1, id2, d1, d2, 'F', 'FId')
-    ans += check_type(id1, id2, d1, d2, 'C', 'CId')
-    ans += check_type(id1, id2, d1, d2, 'J', 'JId')
+    ans.append(check_type(id1, id2, d1, d2, 'F', 'FId'))
+    ans.append(check_type(id1, id2, d1, d2, 'C', 'CId'))
+    ans.append(check_type(id1, id2, d1, d2, 'J', 'JId'))
     t2 = time.time()
     print "e_id_fcj_id", t2 - t1, "sec(s)"
     return ans
