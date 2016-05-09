@@ -4,7 +4,7 @@ import json
 import threading
 from Queue import Queue
 
-max_request_num = 400
+max_request_num = 500
 
 datapool = {}
 
@@ -26,14 +26,18 @@ def doWork():
             'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
         })
         data = []
-        try:
-            conn = httplib.HTTPSConnection('oxfordhk.azure-api.net')
-            conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
-            response = conn.getresponse()
-            data = response.read()
-            conn.close()
-        except Exception as e:
-            print("[Errno {0}] {1}".format(e.errno, e.strerror))
+
+        while True:
+            try:
+                conn = httplib.HTTPSConnection('oxfordhk.azure-api.net', timeout=5)
+                conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
+                response = conn.getresponse()
+                data = response.read()
+                conn.close()
+                break
+            except Exception as e:
+                print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                continue
 
         #return json.loads(data)
         datapool[target] = json.loads(data)
