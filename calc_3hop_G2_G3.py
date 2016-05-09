@@ -7,8 +7,8 @@ import calc_3hop_utils
 '''
 Q2 = G2,G3:
   V G2->G1->G2->G3: Id -> (F/C/J AND Id') <- AuId (intersecting F/C/J)
-    G2->G2->G2->G3: Id -> (RId AND Id') <- AuId (intersecting RId)
-    G2->G3->G2->G3: Id -> (AuId AND Id') <- AuId' (intersecting AuId)
+  V G2->G2->G2->G3: Id -> (RId AND Id') <- AuId (intersecting RId)
+  V G2->G3->G2->G3: Id -> (AuId AND Id') <- AuId' (intersecting AuId)
     G2->G3->G4->G3: Id -> (AuId AND AfId) <- AuId' (intersecting AfId)
     Interval results:
     Id1_FCJ, Id1_RId, Id1_AuId, Id1_AuId_AfId
@@ -75,6 +75,34 @@ def G2_G3_2(entity1, entity2, num1, num2):
             else:
                 ret_list_3hop_G2_G3_2.append([num2, Id, RId, num1])
     print "G2_G3_2 finished"
+
+def G2_G3_3(entity1, entity2, num1, num2):
+    # G2->G3->G2->G3: Id -> (AuId AND Id') <- AuId' (intersecting AuId)
+    global ret_list_3hop_G2_G3_3
+
+    Id1_AuId1 = [AA_elem["AuId"] for AA_elem in entity1["entities"][0]["AA"]]
+    Id1_AuId1_Id = {}
+    for i in range(len(Id1_AuId1)):
+        calc_3hop_utils.send_request(
+            {"expr":('Composite(AA.AuId=%d)' % Id1_AuId1[i]), "target":("G2_G3_3_AuId_Id_%d" % i)})
+    for i in range(len(Id1_AuId1)):
+        AuId = Id1_AuId1[i]
+        AuId_Id = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G3_3_AuId_Id_%d" % i)["entities"]]
+        for new_Id in AuId_Id:
+            if Id1_AuId1_Id.has_key(new_Id) == False:
+                Id1_AuId1_Id[new_Id] = []
+            Id1_AuId1_Id[new_Id].append(AuId)
+
+    AuId2_Id2 = [entity["Id"] for entity in entity2["entities"]]
+    RId_intersection = list(set(Id1_AuId1_Id.keys()).intersection(set(AuId2_Id2)))
+
+    for Id2 in AuId2_Id2:
+        for AuId in Id1_AuId1_Id[Id2]:
+            if reverse_out == False:
+                ret_list_3hop_G2_G3_3.append([num1, AuId, Id2, num2])
+            else:
+                ret_list_3hop_G2_G3_3.append([num2, Id2, AuId, num1])
+    print "G2_G3_3 finished"
 
 def G2_G3(entity1, entity2, num1, num2, reverse_out):
     '''
