@@ -14,7 +14,7 @@ def check_type(id1, id2, l1, l2, N, sN):
     ans = []
     if (not type(list1) is list):
         if (list1[sN] == list2[sN]):
-            return [id1, list1[sN], id2]
+            return [[id1, list1[sN], id2]]
         else:
             return []
     for i in list1:
