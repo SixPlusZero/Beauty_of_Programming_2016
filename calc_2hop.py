@@ -69,6 +69,7 @@ def main(id1, id2):
     if (problem_type == -1): return []
     stage_ans = calc(id1, id2, problem_type)
     final_ans = []
+    print stage_ans
     for t in stage_ans:
         if (len(t) == 0): continue
         final_ans.append(t)
@@ -83,5 +84,6 @@ if __name__ == '__main__':
     #main(2133990480,2126237948) #type1
     #main(2251253715, 2180737804) #type2
     #main(2171035091, 2294309805) #type3
-    main(2147152072, 189831743)
+    main(2332023333, 2310280492)
+    #main(2147152072, 189831743)
     os.kill(os.getpid(), signal.SIGKILL)
