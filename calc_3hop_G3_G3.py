@@ -36,6 +36,7 @@ def G3_G3_1(entity1, entity2, num1, num2):
     for RId in RId_intersection:
         for Id in AuId1_Id_RId[RId]:
             ret_list_3hop_G3_G3_1.append([num1, Id, RId, num2])
+    print "G2_G3_3_3 finished"
 
 def G3_G3(entity1, entity2, num1, num2):
     '''
@@ -50,4 +51,4 @@ def G3_G3(entity1, entity2, num1, num2):
     
     t_hop3_G3_G3_1.join()
     
-    return ret_list_3hop_G3_G3_1
+    return calc_3hop_utils.unique_list(ret_list_3hop_G3_G3_1)

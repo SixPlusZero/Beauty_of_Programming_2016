@@ -65,4 +65,11 @@ for i in range(max_request_num):
 
 def send_request(bundle):
     q.put(bundle)
+
+def unique_list(origin_list):
+    new_list = []
+    for elem in origin_list:
+        if elem not in new_list:
+            new_list.append(elem)
+    return new_list
     
