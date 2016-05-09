@@ -25,6 +25,7 @@ ret_list_3hop_G2_G2_5 = []
 def G2_G2_1(entity1, entity2, num1, num2):
     # G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
     global ret_list_3hop_G2_G2_1
+    ret_list_3hop_G2_G2_1 = []
 
     Id1_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity1)
     Id1_FCJ_Id = {}
@@ -63,6 +64,7 @@ def G2_G2_1(entity1, entity2, num1, num2):
 def G2_G2_2(entity1, entity2, num1, num2):
     # G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
     global ret_list_3hop_G2_G2_2
+    ret_list_3hop_G2_G2_2 = []
 
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_FCJ = {}
@@ -89,6 +91,7 @@ def G2_G2_2(entity1, entity2, num1, num2):
 def G2_G2_3(entity1, entity2, num1, num2):
     # G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
     global ret_list_3hop_G2_G2_3
+    ret_list_3hop_G2_G2_3 = []
 
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_RId = {}
@@ -118,6 +121,7 @@ def G2_G2_3(entity1, entity2, num1, num2):
 def G2_G2_4(entity1, entity2, num1, num2):
     # G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
     global ret_list_3hop_G2_G2_4
+    ret_list_3hop_G2_G2_4 = []
 
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_AuId = {}
@@ -143,6 +147,7 @@ def G2_G2_4(entity1, entity2, num1, num2):
 def G2_G2_5(entity1, entity2, num1, num2):
     # G2->G3->G2->G2: Id -> (AuId AND RId) <- Id' (intersecting AuId)
     global ret_list_3hop_G2_G2_5
+    ret_list_3hop_G2_G2_5 = []
 
     Id1_AuId = [AA_elem["AuId"] for AA_elem in entity1["entities"][0]["AA"]]
     Id1_AuId_Id = {}

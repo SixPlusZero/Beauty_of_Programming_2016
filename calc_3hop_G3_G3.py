@@ -16,6 +16,7 @@ ret_list_3hop_G3_G3_1 = []
 
 def G3_G3_1(entity1, entity2, num1, num2):
     global ret_list_3hop_G3_G3_1
+    ret_list_3hop_G3_G3_1 = []
 
     # G3->G2->G2->G3: AuId -> (Id AND Id') <- AuId' (intersecting RId)
     AuId1_Id = [entity["Id"] for entity in entity1["entities"]]
