@@ -19,13 +19,26 @@ def problem_0(id1, id2, n1, n2):
     return ans
 
 def problem_1(id1, id2, n1, n2):
-    pass
+    ans = []
+    t1 = core_2hop.getdata(n1)["entities"][0]
+    ans += app_2hop.e_id_id_auid(id1, id2, t1)
+    return ans
+
 
 def problem_2(id1, id2, n1, n2):
-    pass
+    #AA.AuId->Id->AA.AuId
+    ans = []
+    t1 = core_2hop.getdata(n1)["entities"]
+    ans += app_2hop.e_auid_id_id(id1, id2, t1)
+    return ans
 
 def problem_3(id1, id2, n1, n2):
-    pass
+    ans = []
+    t1 = core_2hop.getdata(n1)["entities"]
+    t2 = core_2hop.getdata(n2)["entities"]
+    if (len(t1) == 0 or len(t2) == 0): return []
+    ans += app_2hop.e_auid_id_auid(id1, id2, t1, t2)
+    return ans
 
 
 
@@ -52,9 +65,8 @@ def calc(id1, id2, problem_type):
 
 def main(id1, id2):
     problem_type = core_2hop.check_probleam_type(id1, id2)
-
+    print "problem_type", problem_type
     if (problem_type == -1): return []
-
     final_ans = calc(id1, id2, problem_type)
     print final_ans
     return final_ans
@@ -63,5 +75,8 @@ def main(id1, id2):
 if __name__ == '__main__':
     #print calc(2147152072,189831743,0)
     #print core_2hop.auid_to_id(2077695977)
-    main(2147152072,189831743)
+    #main(2147152072,189831743) #type0
+    #main(2133990480,2126237948) #type1
+    #main(2251253715, 2180737804) #type2
+    main(2171035091, 2294309805) #type3
     os.kill(os.getpid(), signal.SIGKILL)

@@ -61,5 +61,58 @@ def e_id_id_id(id1, id2, d1, d2):
                 break
     t2 = time.time()
     print "e_id_id_id", t2 - t1, "sec(s)"
+    return ans
 
+def e_id_id_auid(id1, id2, d1):
+    t1 = time.time()
+    ans = []
+    list_1h = d1['RId']
+    len_1hop = len(list_1h)
+    for w in list_1h:
+        sub_ans = core_2hop.send_request({"expr":('Id=%d' % id1), "target":"id_id_id_%d" % w})
+    for w in list_1h:
+        w = core_2hop.getdata("id_id_id_%d" % w)
+        if (not w.has_key("entities")): continue
+        w = w["entities"][0]
+        #print w
+        wid = w['Id']
+        if (not w.has_key("AA")): continue
+        w = w['AA']
+        for ww in w:
+            if (ww['AuId'] == id2):
+                ans.append([id1, wid, id2])
+                break
+    t2 = time.time()
+    print "e_id_id_auid", t2 - t1, "sec(s)"
+    return ans
+
+def e_auid_id_id(id1, id2, d1):
+    t1 = time.time()
+    ans = []
+    for t in d1:
+        pid = t['Id']
+        sub_ans = core_2hop.send_request({"expr":('Id=%d' % pid), "target":"auid_id_id_%d" % pid})
+    len_1hop = len(d1)
+    for t in d1:
+        pid = t['Id']
+        w = core_2hop.getdata("auid_id_id_%d" % pid)
+        if (not w.has_key("entities")): continue
+        w = w["entities"][0]
+        wid = w['Id']
+        if (wid == id2):
+            ans.append([id1, wid, id2])
+    t2 = time.time()
+    print "e_auid_id_id", t2 - t1, "sec(s)"
+    return ans
+
+def e_auid_id_auid(id1, id2, d1, d2):
+    t1 = time.time()
+    ans = []
+    for i in d1:
+        for j in d2:
+            if (i['Id'] == j['Id']):
+                ans.append([id1, i['Id'], id2])
+
+    t2 = time.time()
+    print "e_auid_id_auid", t2 - t1, "sec(s)"
     return ans
