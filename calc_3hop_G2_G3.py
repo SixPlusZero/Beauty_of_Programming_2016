@@ -203,7 +203,7 @@ def G2_G3(entity1, entity2, num1, num2, reverse_out):
     t_hop3_G2_G3_4 = threading.Thread(target=G2_G3_4,args=(entity1, entity2, num1, num2, reverse_out))
     t_hop3_G2_G3_4.start()
 
-    t_hop3_G2_G3_1.join(30)
+    t_hop3_G2_G3_1.join(150)
     t_hop3_G2_G3_2.join(0)
     t_hop3_G2_G3_3.join(0)
     t_hop3_G2_G3_4.join(0)
