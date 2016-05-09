@@ -67,8 +67,12 @@ def main(id1, id2):
     problem_type = core_2hop.check_probleam_type(id1, id2)
     print "problem_type", problem_type
     if (problem_type == -1): return []
-    final_ans = calc(id1, id2, problem_type)
-    print final_ans
+    stage_ans = calc(id1, id2, problem_type)
+    final_ans = []
+    for t in stage_ans:
+        if (len(t) == 0): continue
+        final_ans.append(t)
+    print "FINALANS", final_ans
     return final_ans
 
 ########### debug_layer #############
@@ -78,5 +82,6 @@ if __name__ == '__main__':
     #main(2147152072,189831743) #type0
     #main(2133990480,2126237948) #type1
     #main(2251253715, 2180737804) #type2
-    main(2171035091, 2294309805) #type3
+    #main(2171035091, 2294309805) #type3
+    main(2332023333, 2310280492)
     os.kill(os.getpid(), signal.SIGKILL)
