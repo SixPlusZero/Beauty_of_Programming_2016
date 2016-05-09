@@ -50,6 +50,6 @@ def G3_G3(entity1, entity2, num1, num2):
     t_hop3_G3_G3_1 = threading.Thread(target=G3_G3_1,args=(entity1, entity2, num1, num2))
     t_hop3_G3_G3_1.start()
     
-    t_hop3_G3_G3_1.join()
+    t_hop3_G3_G3_1.join(30)
     
     return calc_3hop_utils.unique_list(ret_list_3hop_G3_G3_1)

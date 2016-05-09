@@ -189,7 +189,7 @@ def G2_G2_5(entity1, entity2, num1, num2):
                         ret_list_3hop_G2_G2_5.append([num1, Id1_AuId, new_Id, num2])
         except:
             continue
-            
+
     print "G2_G2_5 finished"
 
 def G2_G2(entity1, entity2, num1, num2):
@@ -210,11 +210,11 @@ def G2_G2(entity1, entity2, num1, num2):
     t_hop3_G2_G2_5 = threading.Thread(target=G2_G2_5,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_5.start()
 
-    t_hop3_G2_G2_1.join()
-    t_hop3_G2_G2_2.join()
-    t_hop3_G2_G2_3.join()
-    t_hop3_G2_G2_4.join()
-    t_hop3_G2_G2_5.join()
+    t_hop3_G2_G2_1.join(30)
+    t_hop3_G2_G2_2.join(0)
+    t_hop3_G2_G2_3.join(0)
+    t_hop3_G2_G2_4.join(0)
+    t_hop3_G2_G2_5.join(0)
 
     return calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_1) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_2) + \
