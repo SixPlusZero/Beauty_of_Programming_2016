@@ -6,7 +6,7 @@ import calc_3hop_utils
 
 '''
 Q2 = G2,G3:
-    G2->G1->G2->G3: Id -> (F/C/J AND Id') <- AuId (intersecting F/C/J)
+  V G2->G1->G2->G3: Id -> (F/C/J AND Id') <- AuId (intersecting F/C/J)
     G2->G2->G2->G3: Id -> (RId AND Id') <- AuId (intersecting RId)
     G2->G3->G2->G3: Id -> (AuId AND Id') <- AuId' (intersecting AuId)
     G2->G3->G4->G3: Id -> (AuId AND AfId) <- AuId' (intersecting AfId)
@@ -47,6 +47,34 @@ def G2_G3_1(entity1, entity2, num1, num2, reverse_out):
                 ret_list_3hop_G2_G3_1.append([num2, Id2, method_id, num1])
 
     print "G2_G3_1 finished"
+
+def G2_G3_2(entity1, entity2, num1, num2):
+    # G2->G2->G2->G3: Id -> (RId AND Id') <- AuId (intersecting RId)
+    global ret_list_3hop_G2_G3_2
+
+    Id1_RId = entity1["entities"][0]["RId"]
+    Id1_RId_RId = {}
+    for i in range(len(Id1_RId)):
+        calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G3_2_RId_RId_%d" % i)})
+    for i in range(len(Id1_RId)):
+        old_RId = Id1_RId[i]
+        RId_RId = calc_3hop_utils.getdata("G2_G3_2_RId_RId_%d" % i)["entities"][0]["RId"]
+        for new_RId in RId_RId:
+            if Id1_RId_RId.has_key(new_RId) == False:
+                Id1_RId_RId[new_RId] = []
+            Id1_RId_RId[new_RId].append(old_RId)
+
+    AuId2_Id = [entity["Id"] for entity in entity2["entities"]]
+
+    Id_intersection = list(set(Id1_RId_RId.keys()).intersection(set(AuId2_Id)))
+
+    for Id in AuId2_Id:
+        for RId in Id1_RId_RId[Id]:
+            if reverse_out == False:
+                ret_list_3hop_G2_G3_2.append([num1, RId, Id, num2])
+            else:
+                ret_list_3hop_G2_G3_2.append([num2, Id, RId, num1])
+    print "G2_G3_2 finished"
 
 def G2_G3(entity1, entity2, num1, num2, reverse_out):
     '''
