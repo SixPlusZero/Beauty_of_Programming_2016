@@ -16,9 +16,9 @@ def handle_request():
         target = bundle["target"]
         params_str = urllib.urlencode({
             'expr': str(expr),
-            'count': '100',
+            'count': '500',
             'offset': '0',
-            'orderby': 'Id:asc',
+#            'orderby': 'Id:asc',
             'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,RId'
         })
         data = []
