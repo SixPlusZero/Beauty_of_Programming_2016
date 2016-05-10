@@ -76,19 +76,19 @@ def G2_G3_2_2to3(entity1, entity2, num1, num2):
 
     for Id in Id_intersection:
         for RId in Id1_RId_RId[Id]:
-                ret_list_3hop_G2_G3_2.append([num1, RId, Id, num2])
+            ret_list_3hop_G2_G3_2.append([num1, RId, Id, num2])
     print "G2_G3_2_2223 finished"
 
 def G2_G3_2_3to2(entity1, entity2, num1, num2):
     # G3->G2->G2->G2: Id -> (RId AND Id') <- AuId (intersecting RId)
     global ret_list_3hop_G2_G3_2
     ret_list_3hop_G2_G3_2 = []
-    # G3->G2->G2->G3: AuId -> (Id AND Id') <- AuId' (intersecting RId)
     
     AuId_Id = [entity["Id"] for entity in entity1["entities"]]
     AuId_Id_RId = {}
     for i in range(len(AuId_Id)):
         calc_3hop_utils.send_request({"expr":('Id=%d' % AuId_Id[i]), "target":("G2_G3_2_Id_RId_%d" % i)})
+    calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G3_2_Id_RingId"})
     for i in range(len(AuId_Id)):
         Id = AuId_Id[i]
         Id_RId = calc_3hop_utils.getdata("G2_G3_2_Id_RId_%d" % i)["entities"][0]["RId"]
@@ -97,17 +97,12 @@ def G2_G3_2_3to2(entity1, entity2, num1, num2):
                 AuId_Id_RId[RId] = []
             AuId_Id_RId[RId].append(Id)
 
-    AuId_Id_RId_keys = AuId_Id_RId.keys()
-    for i in range(len(AuId_Id_RId_keys)):
-        calc_3hop_utils.send_request(
-            {"expr":('Id=%d' % AuId_Id_RId_keys[i]), "target":("G2_G3_2_final_RId_list_%d" % i)})
-    for i in range(len(AuId_Id_RId_keys)):
-        new_RId = AuId_Id_RId_keys[i]
-        final_RId_list = calc_3hop_utils.getdata("G2_G3_2_final_RId_list_%d" % i)["entities"][0]["RId"]
-        for final_RId in final_RId_list:
-            if final_RId == num2:
-                for AuId_RId in AuId_Id_RId_keys[new_RId]:
-                    ret_list_3hop_G2_G2_3.append([num1, AuId_RId, new_RId, num2])
+    Id_RingId = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G3_2_Id_RingId")["entities"]]
+    Id_intersection = list(set(AuId_Id_RId.keys()).intersection(set(Id_RingId)))
+
+    for Id in Id_intersection:
+        for RId in AuId_Id_RId[Id]:
+            ret_list_3hop_G2_G3_2.append([num1, RId, Id, num2])
     print "G2_G3_2_3222 finished"
 
 def G2_G3_3(entity1, entity2, num1, num2, reverse_out):
