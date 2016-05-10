@@ -20,7 +20,7 @@ def doWork():
         target = bundle["target"]
         params_str = urllib.urlencode({
             'expr': str(expr),
-            'count': '1000',
+            'count': '1000000',
             'offset': '0',
 #            'orderby': 'Id:asc',
             'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
