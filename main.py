@@ -42,6 +42,7 @@ def request(arg1, arg2):
     t_3hop.start()
 
     t_1hop.join()
+    t_2hop.join()
     t_3hop.join()
 
     print "ret_list_1hop:"
