@@ -1,6 +1,7 @@
 import httplib, urllib, base64
 import threading
 import json
+import time
 from Queue import Queue
 
 max_request_num = 200
