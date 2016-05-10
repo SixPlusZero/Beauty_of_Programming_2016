@@ -67,11 +67,11 @@ def calc(id1, id2, problem_type):
 
 def main(id1, id2):
     problem_type = core_2hop.check_probleam_type(id1, id2)
-    #print "problem_type", problem_type
+    print "[2hop]problem_type", problem_type
     if (problem_type == -1): return []
     stage_ans = calc(id1, id2, problem_type)
     final_ans = []
-    #print stage_ans
+    print "[2hop]done", stage_ans
     for t in stage_ans:
         if (len(t) == 0): continue
         final_ans.append(t)
@@ -88,9 +88,9 @@ if __name__ == '__main__':
     #main(2171035091, 2294309805) #type3
     #main(2332023333, 2310280492)
     #main(2147152072, 189831743)
-    
-    # @yzy
-    main(2151561903, 2151561903)
-    #main(2251253715, 2251253715)
 
+    # @yzy
+    #main(2151561903, 2151561903)
+    #main(2251253715, 2251253715)
+    main(1775749144, 2292217923)
     os.kill(os.getpid(), signal.SIGKILL)

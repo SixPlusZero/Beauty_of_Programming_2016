@@ -50,7 +50,7 @@ def calc(id1, id2, problem_type):
 ####################################
 def main(id1, id2):
     problem_type = core_1hop.check_probleam_type(id1, id2)
-    #print "problem_type", problem_type
+    print "[1hop]problem_type", problem_type
     if (problem_type == -1): return []
     stage_ans = calc(id1, id2, problem_type)
     #print "Stage Ans for 1hop:", stage_ans
@@ -60,7 +60,7 @@ def main(id1, id2):
         return []
 if __name__ == '__main__':
     #print main(2251253715, 2180737804)
-    main(2147152072,189831743) #type0
+    #main(2147152072,189831743) #type0
     #main(2133990480,2126237948) #type1
     #main(2251253715, 2180737804) #type2
     #main(2171035091, 2294309805) #type3
