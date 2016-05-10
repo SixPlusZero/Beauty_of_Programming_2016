@@ -50,6 +50,7 @@ def e_id_id_id(id1, id2, d1, d2):
     for w in list_1h:
         sub_ans = core_2hop.send_request({"expr":('Id=%d' % w), "target":"id_id_id_%d" % w})
     for w in list_1h:
+        temp_id = w
         w = core_2hop.getdata("id_id_id_%d" % w)
         if (not w.has_key("entities")): continue
         w = w["entities"][0]
@@ -57,7 +58,7 @@ def e_id_id_id(id1, id2, d1, d2):
         w = w['RId']
         for ww in w:
             if (ww == id2):
-                ans.append([id1, w, id2])
+                ans.append([id1, temp_id, id2])
                 break
     t2 = time.time()
     print "e_id_id_id", t2 - t1, "sec(s)"
