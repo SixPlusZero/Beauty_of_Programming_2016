@@ -19,7 +19,7 @@ def handle_request():
             'count': '500',
             'offset': '0',
 #            'orderby': 'Id:asc',
-            'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,RId'
+            'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
         })
         data = []
         while True:

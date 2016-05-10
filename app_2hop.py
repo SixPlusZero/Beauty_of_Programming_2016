@@ -98,7 +98,7 @@ def e_auid_id_id(id1, id2, d1):
         w = core_2hop.getdata("auid_id_id_%d" % pid)
         if (not w.has_key("entities")): continue
         w = w["entities"][0]
-        wid = w['Id']
+        wid = w['RId']
         if (wid == id2):
             ans.append([id1, pid, id2])
     t2 = time.time()
@@ -115,4 +115,24 @@ def e_auid_id_auid(id1, id2, d1, d2):
 
     t2 = time.time()
     print "e_auid_id_auid", t2 - t1, "sec(s)"
+    return ans
+
+def e_auid_afid_auid(id1, id2, d1, d2):
+    t1 = time.time()
+    ans = []
+    #print d1
+    #print d2
+    for i in d1:
+        if (not i.has_key("AA")): continue
+        for j in d2:
+            if (not j.has_key("AA")): continue
+            for ii in i['AA']:
+                if (not ii.has_key('AfId')): continue
+                for jj in j['AA']:
+                    if (not jj.has_key('AfId')): continue
+                    if (ii['AfId'] == j['AfId']):
+                        ans.append([id1, i['AfId'], id2])
+
+    t2 = time.time()
+    print "e_auid_afid_auid", t2 - t1, "sec(s)"
     return ans
