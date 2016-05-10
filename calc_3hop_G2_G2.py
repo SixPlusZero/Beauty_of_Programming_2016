@@ -6,7 +6,7 @@ import calc_3hop_utils
 
 '''
 Q1 = G2,G2:
-1 V G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
+1 A G2->G1->G2->G2: Id -> (F/C/J AND RId) <- Id' (intersecting F/C/J)
 2 V G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
 3 V G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
 4 V G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
@@ -79,14 +79,14 @@ def G2_G2_3(entity1, entity2, num1, num2):
     calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G2_3_Id_RingId"})
     for i in range(len(Id1_RId)):
         old_RId = Id1_RId[i]
-        try:
-            RId_RId = calc_3hop_utils.getdata("G2_G2_3_RId_RId_%d" % i)["entities"][0]["RId"]
-            for new_RId in RId_RId:
-                if Id1_RId_RId.has_key(new_RId) == False:
-                    Id1_RId_RId[new_RId] = []
-                Id1_RId_RId[new_RId].append(old_RId)
-        except:
-            continue
+        #try:
+        RId_RId = calc_3hop_utils.getdata("G2_G2_3_RId_RId_%d" % i)["entities"][0]["RId"]
+        for new_RId in RId_RId:
+            if Id1_RId_RId.has_key(new_RId) == False:
+                Id1_RId_RId[new_RId] = []
+            Id1_RId_RId[new_RId].append(old_RId)
+        #except:
+            #continue
 
     Id_RingId = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_3_Id_RingId")["entities"]]
     Id_intersection = list(set(Id1_RId_RId.keys()).intersection(set(Id_RingId)))
@@ -108,14 +108,14 @@ def G2_G2_4(entity1, entity2, num1, num2):
         calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G2_4_RId_AuId_%d" % i)})
     for i in range(len(Id1_RId)):
         RId = Id1_RId[i]
-        try:
-            RId_AuId = [AA_elem["AuId"] for AA_elem in calc_3hop_utils.getdata("G2_G2_4_RId_AuId_%d" % i)["entities"][0]["AA"]]
-            for AuId in RId_AuId:
-                if Id1_RId_AuId.has_key(AuId) == False:
-                    Id1_RId_AuId[AuId] = []
-                Id1_RId_AuId[AuId].append(RId)
-        except:
-            continue
+        #try:
+        RId_AuId = [AA_elem["AuId"] for AA_elem in calc_3hop_utils.getdata("G2_G2_4_RId_AuId_%d" % i)["entities"][0]["AA"]]
+        for AuId in RId_AuId:
+            if Id1_RId_AuId.has_key(AuId) == False:
+                Id1_RId_AuId[AuId] = []
+            Id1_RId_AuId[AuId].append(RId)
+        #except:
+            #continue
 
     Id2_AuId = [AA_elem["AuId"] for AA_elem in entity2["entities"][0]["AA"]]
 
@@ -177,6 +177,19 @@ def G2_G2(entity1, entity2, num1, num2):
     t_hop3_G2_G2_3.join(0)
     t_hop3_G2_G2_4.join(0)
     t_hop3_G2_G2_5.join(60)
+
+    '''
+    print "ret_list_3hop_G2_G2_1"
+    print calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_1)
+    print "ret_list_3hop_G2_G2_2"
+    print calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_2)
+    print "ret_list_3hop_G2_G2_3"
+    print calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_3)
+    print "ret_list_3hop_G2_G2_4"
+    print calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_4)
+    print "ret_list_3hop_G2_G2_5"
+    print calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_5)
+    '''
 
     return calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_1) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_2) + \

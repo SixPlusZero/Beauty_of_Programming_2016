@@ -69,7 +69,7 @@ def e_id_id_auid(id1, id2, d1):
     list_1h = d1['RId']
     len_1hop = len(list_1h)
     for w in list_1h:
-        sub_ans = core_2hop.send_request({"expr":('Id=%d' % id1), "target":"id_id_id_%d" % w})
+        sub_ans = core_2hop.send_request({"expr":('Id=%d' % w), "target":"id_id_id_%d" % w})
     for w in list_1h:
         w = core_2hop.getdata("id_id_id_%d" % w)
         if (not w.has_key("entities")): continue
