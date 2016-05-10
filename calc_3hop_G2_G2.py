@@ -177,6 +177,7 @@ def G2_G2(entity1, entity2, num1, num2):
     t_hop3_G2_G2_3.join(0)
     t_hop3_G2_G2_4.join(0)
     t_hop3_G2_G2_5.join(60)
+    print '[3hop] timeout'
 
     '''
     print "ret_list_3hop_G2_G2_1"
