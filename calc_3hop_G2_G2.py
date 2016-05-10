@@ -29,10 +29,10 @@ def G2_G2_1(entity1, entity2, num1, num2):
 
     Id1_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity1)
     calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G2_1_Id_RingId"})
-    Id_RingId_entities = [entity for entity in calc_3hop_utils.getdata("G2_G2_1_Id_RingId")["entities"]]
+    Id_RingId_entities = calc_3hop_utils.getdata("G2_G2_1_Id_RingId")["entities"]
     
     for entity in Id_RingId_entities:
-        RingId_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity)
+        RingId_FCJ = calc_3hop_utils.FCJ_by_IdEntity({"entities":[entity]})
         RingId = entity["Id"]
         FCJ_intersection = list(set(RingId_FCJ).intersection(set(Id1_FCJ)))
         for method_id in FCJ_intersection:
@@ -76,6 +76,7 @@ def G2_G2_3(entity1, entity2, num1, num2):
     Id1_RId_RId = {}
     for i in range(len(Id1_RId)):
         calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G2_3_RId_RId_%d" % i)})
+    calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G2_3_Id_RingId"})
     for i in range(len(Id1_RId)):
         old_RId = Id1_RId[i]
         try:
@@ -87,20 +88,12 @@ def G2_G2_3(entity1, entity2, num1, num2):
         except:
             continue
 
-    Id1_RId_RId_keys = Id1_RId_RId.keys()
-    for i in range(len(Id1_RId_RId_keys)):
-        calc_3hop_utils.send_request(
-            {"expr":('Id=%d' % Id1_RId_RId_keys[i]), "target":("G2_G2_3_final_RId_list_%d" % i)})
-    for i in range(len(Id1_RId_RId_keys)):
-        new_RId = Id1_RId_RId_keys[i]
-        try:
-            final_RId_list = calc_3hop_utils.getdata("G2_G2_3_final_RId_list_%d" % i)["entities"][0]["RId"]
-            for final_RId in final_RId_list:
-                if final_RId == num2:
-                    for Id1_RId in Id1_RId_RId[new_RId]:
-                        ret_list_3hop_G2_G2_3.append([num1, Id1_RId, new_RId, num2])
-        except:
-            continue
+    Id_RingId = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_3_Id_RingId")["entities"]]
+    Id_intersection = list(set(Id1_RId_RId.keys()).intersection(set(Id_RingId)))
+
+    for Id in Id_intersection:
+        for RId in Id1_RId_RId[Id]:
+            ret_list_3hop_G2_G3_3.append([num1, RId, Id, num2])    
     print "G2_G2_3 finished"
 
 def G2_G2_4(entity1, entity2, num1, num2):
@@ -143,6 +136,7 @@ def G2_G2_5(entity1, entity2, num1, num2):
     for i in range(len(Id1_AuId)):
         calc_3hop_utils.send_request(
             {"expr":('Composite(AA.AuId=%d)' % Id1_AuId[i]), "target":("G2_G2_5_AuId_Id_%d" % i)})
+    calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G2_5_Id_RingId"})
     for i in range(len(Id1_AuId)):
         AuId = Id1_AuId[i]
         AuId_Id = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_5_AuId_Id_%d" % i)["entities"]]
@@ -151,20 +145,12 @@ def G2_G2_5(entity1, entity2, num1, num2):
                 Id1_AuId_Id[new_Id] = []
             Id1_AuId_Id[new_Id].append(AuId)
 
-    Id1_AuId_Id_keys = Id1_AuId_Id.keys()
-    for i in range(len(Id1_AuId_Id_keys)):
-        calc_3hop_utils.send_request(
-            {"expr":('Id=%d' % Id1_AuId_Id_keys[i]), "target":("G2_G2_5_final_RId_list_%d" % i)})
-    for i in range(len(Id1_AuId_Id_keys)):
-        new_Id = Id1_AuId_Id_keys[i]
-        try:
-            final_RId_list = calc_3hop_utils.getdata("G2_G2_5_final_RId_list_%d" % i)["entities"][0]["RId"]
-            for final_RId in final_RId_list:
-                if final_RId == num2:
-                    for Id1_AuId in Id1_AuId_Id[new_Id]:
-                        ret_list_3hop_G2_G2_5.append([num1, Id1_AuId, new_Id, num2])
-        except:
-            continue
+    Id_RingId = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_5_Id_RingId")["entities"]]
+    Id_intersection = list(set(Id1_AuId_Id.keys()).intersection(set(Id_RingId)))
+
+    for Id in Id_intersection:
+        for RId in Id1_AuId_Id[Id]:
+            ret_list_3hop_G2_G3_5.append([num1, RId, Id, num2])    
 
     print "G2_G2_5 finished"
 
@@ -186,11 +172,11 @@ def G2_G2(entity1, entity2, num1, num2):
     t_hop3_G2_G2_5 = threading.Thread(target=G2_G2_5,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_5.start()
 
-    t_hop3_G2_G2_1.join(150)
+    t_hop3_G2_G2_1.join(0)
     t_hop3_G2_G2_2.join(0)
     t_hop3_G2_G2_3.join(0)
     t_hop3_G2_G2_4.join(0)
-    t_hop3_G2_G2_5.join(0)
+    t_hop3_G2_G2_5.join(60)
 
     return calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_1) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_2) + \
