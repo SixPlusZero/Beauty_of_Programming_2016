@@ -2,6 +2,7 @@
 import httplib, urllib, base64
 import json
 import threading
+import time
 from Queue import Queue
 
 max_request_num = 200
@@ -60,7 +61,9 @@ def clear_datapool():
     datapool = {}
 
 def getdata(datakey):
-    q.join()
+    #q.join()
+    while not datapool.has_key(datakey):
+        time.sleep(0)
     return datapool[datakey]
 
 q = Queue(max_request_num * 2)

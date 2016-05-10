@@ -45,7 +45,8 @@ def clear_datapool():
     datapool = {}
 
 def getdata(datakey):
-    q.join()
+    while not datapool.has_key(datakey):
+        time.sleep(0)
     return datapool[datakey]
 
 def send_request(bundle):
