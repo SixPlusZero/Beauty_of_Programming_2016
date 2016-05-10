@@ -82,10 +82,15 @@ def main(id1, id2):
 if __name__ == '__main__':
     #print calc(2147152072,189831743,0)
     #print core_2hop.auid_to_id(2077695977)
-    main(2147152072,189831743) #type0
+    #main(2147152072,189831743) #type0
     #main(2133990480,2126237948) #type1
     #main(2251253715, 2180737804) #type2
     #main(2171035091, 2294309805) #type3
     #main(2332023333, 2310280492)
     #main(2147152072, 189831743)
+    
+    # @yzy
+    main(2151561903, 2151561903)
+    #main(2251253715, 2251253715)
+
     os.kill(os.getpid(), signal.SIGKILL)
