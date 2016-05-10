@@ -23,10 +23,10 @@ def G3_G3_1(entity1, entity2, num1, num2):
     AuId2_Id = [entity["Id"] for entity in entity2["entities"]]
     AuId1_Id_RId = {}
     for i in range(len(AuId1_Id)):
-    	calc_3hop_utils.send_request({"expr":('Id=%d' % AuId1_Id[i]), "target":("G3_G3_Id_RId_%d" % i)}, 0)
+    	calc_3hop_utils.send_request({"expr":('Id=%d' % AuId1_Id[i]), "target":("G3_G3_Id_RId_%d" % i)})
     for i in range(len(AuId1_Id)):
     	Id = AuId1_Id[i]
-        Id_RId = calc_3hop_utils.getdata(("G3_G3_Id_RId_%d" % i), 0)["entities"][0]["RId"]
+        Id_RId = calc_3hop_utils.getdata("G3_G3_Id_RId_%d" % i)["entities"][0]["RId"]
         for RId in Id_RId:
             if AuId1_Id_RId.has_key(RId) == False:
                 AuId1_Id_RId[RId] = []

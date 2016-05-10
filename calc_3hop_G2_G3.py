@@ -33,10 +33,10 @@ def G2_G3_1(entity1, entity2, num1, num2, reverse_out):
     AuId_Id2 = [entity["Id"] for entity in entity2["entities"]]
     AuId_Id2_FCJ = {}
     for i in range(len(AuId_Id2)):
-        calc_3hop_utils.send_request({"expr":('Id=%d' % AuId_Id2[i]), "target":("G2_G3_1_AuId_Id2_%d" % i)}, 0)
+        calc_3hop_utils.send_request({"expr":('Id=%d' % AuId_Id2[i]), "target":("G2_G3_1_AuId_Id2_%d" % i)})
     for i in range(len(AuId_Id2)):
         Id2 = AuId_Id2[i]
-        Id2_FCJ = calc_3hop_utils.FCJ_by_IdEntity(calc_3hop_utils.getdata(("G2_G3_1_AuId_Id2_%d" % i), 0))
+        Id2_FCJ = calc_3hop_utils.FCJ_by_IdEntity(calc_3hop_utils.getdata("G2_G3_1_AuId_Id2_%d" % i))
         for method_id in Id2_FCJ:
             if AuId_Id2_FCJ.has_key(method_id) == False:
                 AuId_Id2_FCJ[method_id] = []
@@ -61,10 +61,10 @@ def G2_G3_2_2to3(entity1, entity2, num1, num2):
     Id1_RId = entity1["entities"][0]["RId"]
     Id1_RId_RId = {}
     for i in range(len(Id1_RId)):
-        calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G3_2_RId_RId_%d" % i)}, 1)
+        calc_3hop_utils.send_request({"expr":('Id=%d' % Id1_RId[i]), "target":("G2_G3_2_RId_RId_%d" % i)})
     for i in range(len(Id1_RId)):
         old_RId = Id1_RId[i]
-        RId_RId = calc_3hop_utils.getdata(("G2_G3_2_RId_RId_%d" % i), 1)["entities"][0]["RId"]
+        RId_RId = calc_3hop_utils.getdata("G2_G3_2_RId_RId_%d" % i)["entities"][0]["RId"]
         for new_RId in RId_RId:
             if Id1_RId_RId.has_key(new_RId) == False:
                 Id1_RId_RId[new_RId] = []
@@ -87,17 +87,17 @@ def G2_G3_2_3to2(entity1, entity2, num1, num2):
     AuId_Id = [entity["Id"] for entity in entity1["entities"]]
     AuId_Id_RId = {}
     for i in range(len(AuId_Id)):
-        calc_3hop_utils.send_request({"expr":('Id=%d' % AuId_Id[i]), "target":("G2_G3_2_Id_RId_%d" % i)}, 1)
-    calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G3_2_Id_RingId"}, 1)
+        calc_3hop_utils.send_request({"expr":('Id=%d' % AuId_Id[i]), "target":("G2_G3_2_Id_RId_%d" % i)})
+    calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G3_2_Id_RingId"})
     for i in range(len(AuId_Id)):
         Id = AuId_Id[i]
-        Id_RId = calc_3hop_utils.getdata(("G2_G3_2_Id_RId_%d" % i), 1)["entities"][0]["RId"]
+        Id_RId = calc_3hop_utils.getdata("G2_G3_2_Id_RId_%d" % i)["entities"][0]["RId"]
         for RId in Id_RId:
             if AuId_Id_RId.has_key(RId) == False:
                 AuId_Id_RId[RId] = []
             AuId_Id_RId[RId].append(Id)
 
-    Id_RingId = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G3_2_Id_RingId", 1)["entities"]]
+    Id_RingId = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G3_2_Id_RingId")["entities"]]
     Id_intersection = list(set(AuId_Id_RId.keys()).intersection(set(Id_RingId)))
 
     for Id in Id_intersection:
@@ -114,10 +114,10 @@ def G2_G3_3(entity1, entity2, num1, num2, reverse_out):
     Id1_AuId1_Id = {}
     for i in range(len(Id1_AuId1)):
         calc_3hop_utils.send_request(
-            {"expr":('Composite(AA.AuId=%d)' % Id1_AuId1[i]), "target":("G2_G3_3_AuId_Id_%d" % i)}, 2)
+            {"expr":('Composite(AA.AuId=%d)' % Id1_AuId1[i]), "target":("G2_G3_3_AuId_Id_%d" % i)})
     for i in range(len(Id1_AuId1)):
         AuId = Id1_AuId1[i]
-        AuId_Id = [entity["Id"] for entity in calc_3hop_utils.getdata(("G2_G3_3_AuId_Id_%d" % i), 2)["entities"]]
+        AuId_Id = [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G3_3_AuId_Id_%d" % i)["entities"]]
         for new_Id in AuId_Id:
             if Id1_AuId1_Id.has_key(new_Id) == False:
                 Id1_AuId1_Id[new_Id] = []
@@ -150,10 +150,10 @@ def G2_G3_4(entity1, entity2, num1, num2, reverse_out):
     # search more AfId
     for i in range(len(Id_AuId1)):
         calc_3hop_utils.send_request(
-            {"expr":('Composite(AA.AuId=%d)' % Id_AuId1[i]), "target":("G2_G3_4_AuId_Id_%d" % i)}, 3)
+            {"expr":('Composite(AA.AuId=%d)' % Id_AuId1[i]), "target":("G2_G3_4_AuId_Id_%d" % i)})
     for i in range(len(Id_AuId1)):
         AuId = Id_AuId1[i]
-        entity_list = calc_3hop_utils.getdata(("G2_G3_4_AuId_Id_%d" % i), 3)["entities"]
+        entity_list = calc_3hop_utils.getdata("G2_G3_4_AuId_Id_%d" % i)["entities"]
         for entity in entity_list:
             for AA_elem in entity["AA"]:
                 if AA_elem.has_key("AfId"):
