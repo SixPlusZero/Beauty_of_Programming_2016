@@ -17,9 +17,10 @@ def problem_1(id1, id2, n1, n2):
     return 0
 
 def problem_2(id1, id2, n1, n2):
+    print id1, id2, n1, n2
     return problem_1(id2, id1, n2, n1)
 
-def problem_2(id1, id2, n1, n2):
+def problem_3(id1, id2, n1, n2):
     return 0
 
 #############################################################
