@@ -100,7 +100,7 @@ def e_auid_id_id(id1, id2, d1):
         w = w["entities"][0]
         wid = w['Id']
         if (wid == id2):
-            ans.append([id1, wid, id2])
+            ans.append([id1, pid, id2])
     t2 = time.time()
     print "e_auid_id_id", t2 - t1, "sec(s)"
     return ans
