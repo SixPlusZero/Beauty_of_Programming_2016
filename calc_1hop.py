@@ -2,6 +2,7 @@
 import httplib, urllib, base64, core_1hop, os, signal
 def problem_0(id1, id2, n1, n2):
     t1 = core_1hop.getdata(n1)["entities"][0]
+    print t1
     for rid in t1["RId"]:
         if (rid == id2):
             return 1
@@ -59,8 +60,8 @@ def main(id1, id2):
         return []
 if __name__ == '__main__':
     #print main(2251253715, 2180737804)
-    #main(2147152072,189831743) #type0
+    main(2147152072,189831743) #type0
     #main(2133990480,2126237948) #type1
-    main(2251253715, 2180737804) #type2
+    #main(2251253715, 2180737804) #type2
     #main(2171035091, 2294309805) #type3
     os.kill(os.getpid(), signal.SIGKILL)
