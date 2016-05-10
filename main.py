@@ -14,7 +14,7 @@ ret_list_3hop = []
 
 def wrapper_1hop(id1, id2):
 	global ret_list_1hop
-	ret_list_1hop = calc_1hop.calc(id1, id2)
+	ret_list_1hop = calc_1hop.main(id1, id2)
 
 def wrapper_2hop(id1, id2):
 	global ret_list_2hop
