@@ -36,8 +36,8 @@ def doWork():
                 conn.close()
                 break
             except Exception as e:
-                #print("[Errno {0}] {1}".format(e.errno, e.strerror))
-                print params_str
+                ##print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                #print params_str
                 continue
 
         #return json.loads(data)

@@ -20,5 +20,5 @@ def G3_G2(entity1, entity2, num1, num2):
     AuId1_Id_FCJ, AuId1_Id_RID, AuId1_id_AuId, AuId_AfId
     Id2_FCJ, Id2_RId, Id2_AuId, Id2_AuId_AfId
     '''
-    print "G3_G2"
+    #print "G3_G2"
     return [[1,2,3,4]]

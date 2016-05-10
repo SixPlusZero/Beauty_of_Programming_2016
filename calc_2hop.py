@@ -67,15 +67,15 @@ def calc(id1, id2, problem_type):
 
 def main(id1, id2):
     problem_type = core_2hop.check_probleam_type(id1, id2)
-    print "problem_type", problem_type
+    #print "problem_type", problem_type
     if (problem_type == -1): return []
     stage_ans = calc(id1, id2, problem_type)
     final_ans = []
-    print stage_ans
+    #print stage_ans
     for t in stage_ans:
         if (len(t) == 0): continue
         final_ans.append(t)
-    print "FINALANS", final_ans
+    #print "FINALANS", final_ans
     return final_ans
 
 ########### debug_layer #############

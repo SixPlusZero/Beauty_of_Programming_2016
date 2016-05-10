@@ -25,25 +25,25 @@ def check_type(id1, id2, l1, l2, N, sN):
 
 
 def e_id_auid_id(id1, id2, d1, d2):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     ans += check_type(id1, id2, d1, d2, 'AA', 'AuId')
-    t2 = time.time()
-    print "e_id_auid_id", t2 - t1, "sec(s)"
+    #t2 = time.time()
+    #print "e_id_auid_id", t2 - t1, "sec(s)"
     return ans
 
 def e_id_fcjid_id(id1, id2, d1, d2):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     ans += check_type(id1, id2, d1, d2, 'F', 'FId')
     ans += check_type(id1, id2, d1, d2, 'C', 'CId')
     ans += check_type(id1, id2, d1, d2, 'J', 'JId')
-    t2 = time.time()
-    print "e_id_fcj_id", t2 - t1, "sec(s)", ans
+    #t2 = time.time()
+    #print "e_id_fcj_id", t2 - t1, "sec(s)", ans
     return ans
 
 def e_id_id_id(id1, id2, d1, d2):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     list_1h = d1['RId']
     len_1hop = len(list_1h)
@@ -60,12 +60,12 @@ def e_id_id_id(id1, id2, d1, d2):
             if (ww == id2):
                 ans.append([id1, temp_id, id2])
                 break
-    t2 = time.time()
-    print "e_id_id_id", t2 - t1, "sec(s)"
+    #t2 = time.time()
+    #print "e_id_id_id", t2 - t1, "sec(s)"
     return ans
 
 def e_id_id_auid(id1, id2, d1):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     list_1h = d1['RId']
     len_1hop = len(list_1h)
@@ -83,12 +83,12 @@ def e_id_id_auid(id1, id2, d1):
             if (ww['AuId'] == id2):
                 ans.append([id1, wid, id2])
                 break
-    t2 = time.time()
-    print "e_id_id_auid", t2 - t1, "sec(s)"
+    #t2 = time.time()
+    #print "e_id_id_auid", t2 - t1, "sec(s)"
     return ans
 
 def e_auid_id_id(id1, id2, d1):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     for t in d1:
         pid = t['Id']
@@ -102,24 +102,24 @@ def e_auid_id_id(id1, id2, d1):
         wid = w['RId']
         if (id2 in wid):
             ans.append([id1, pid, id2])
-    t2 = time.time()
-    print "e_auid_id_id", t2 - t1, "sec(s)"
+    #t2 = time.time()
+    #print "e_auid_id_id", t2 - t1, "sec(s)"
     return ans
 
 def e_auid_id_auid(id1, id2, d1, d2):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     for i in d1:
         for j in d2:
             if (i['Id'] == j['Id']):
                 ans.append([id1, i['Id'], id2])
 
-    t2 = time.time()
-    print "e_auid_id_auid", t2 - t1, "sec(s)"
+    #t2 = time.time()
+    #print "e_auid_id_auid", t2 - t1, "sec(s)"
     return ans
 
 def e_auid_afid_auid(id1, id2, d1, d2):
-    t1 = time.time()
+    #t1 = time.time()
     ans = []
     #print d1
     #print d2
@@ -136,6 +136,6 @@ def e_auid_afid_auid(id1, id2, d1, d2):
                         jj['AuId'] == id2):
                         ans.append([id1, ii['AfId'], id2])
 
-    t2 = time.time()
-    print "e_auid_afid_auid", t2 - t1, "sec(s)"
+    #t2 = time.time()
+    #print "e_auid_afid_auid", t2 - t1, "sec(s)"
     return ans

@@ -51,7 +51,7 @@ def G2_G3_1(entity1, entity2, num1, num2, reverse_out):
             else:
                 ret_list_3hop_G2_G3_1.append([num2, Id2, method_id, num1])
 
-    print "G2_G3_1 finished"
+    #print "G2_G3_1 finished"
 
 def G2_G3_2_2to3(entity1, entity2, num1, num2):
     # G2->G2->G2->G3: Id -> (RId AND Id') <- AuId (intersecting RId)
@@ -77,7 +77,7 @@ def G2_G3_2_2to3(entity1, entity2, num1, num2):
     for Id in Id_intersection:
         for RId in Id1_RId_RId[Id]:
             ret_list_3hop_G2_G3_2.append([num1, RId, Id, num2])
-    print "G2_G3_2_2223 finished"
+    #print "G2_G3_2_2223 finished"
 
 def G2_G3_2_3to2(entity1, entity2, num1, num2):
     # G3->G2->G2->G2: Id -> (RId AND Id') <- AuId (intersecting RId)
@@ -103,7 +103,7 @@ def G2_G3_2_3to2(entity1, entity2, num1, num2):
     for Id in Id_intersection:
         for RId in AuId_Id_RId[Id]:
             ret_list_3hop_G2_G3_2.append([num1, RId, Id, num2])
-    print "G2_G3_2_3222 finished"
+    #print "G2_G3_2_3222 finished"
 
 def G2_G3_3(entity1, entity2, num1, num2, reverse_out):
     # G2->G3->G2->G3: Id -> (AuId AND Id') <- AuId' (intersecting AuId)
@@ -132,7 +132,7 @@ def G2_G3_3(entity1, entity2, num1, num2, reverse_out):
                 ret_list_3hop_G2_G3_3.append([num1, AuId, Id2, num2])
             else:
                 ret_list_3hop_G2_G3_3.append([num2, Id2, AuId, num1])
-    print "G2_G3_3 finished"
+    #print "G2_G3_3 finished"
 
 def G2_G3_4(entity1, entity2, num1, num2, reverse_out):
     # G2->G3->G4->G3: Id -> (AuId AND AfId) <- AuId' (intersecting AfId)
@@ -177,14 +177,14 @@ def G2_G3_4(entity1, entity2, num1, num2, reverse_out):
                 ret_list_3hop_G2_G3_4.append([num1, AuId, AfId, num2])
             else:
                 ret_list_3hop_G2_G3_4.append([num2, AfId, AuId, num1])
-    print "G2_G3_4 finished"
+    #print "G2_G3_4 finished"
     
 def G2_G3(entity1, entity2, num1, num2, reverse_out):
     '''
     Id1_FCJ, Id1_RId, Id1_AuId, Id1_AuId_AfId
     AuId2_Id_FCJ, AuId2_Id_RId, AuId2_Id_AuId, AuId2_AfId
     '''
-    print "G2_G3"
+    #print "G2_G3"
 
     t_hop3_G2_G3_1 = threading.Thread(target=G2_G3_1,args=(entity1, entity2, num1, num2, reverse_out))
     t_hop3_G2_G3_1.start()

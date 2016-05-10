@@ -16,10 +16,10 @@ class BOPRequest(Resource):
         args = parser.parse_args()
         id1 = args['id1']
         id2 = args['id2'] 
-        print "id1@\t", id1
-        print "id2@\t", id2
+        #print "id1@\t", id1
+        #print "id2@\t", id2
         cgiResult = main.request(id1, id2)
-        print "CGIResult: #" + str(cgiResult) + "#"
+        #print "CGIResult: #" + str(cgiResult) + "#"
         #if type(cgiResult) != type(""):
         #    return json.dumps(cgiResult)
         #else:

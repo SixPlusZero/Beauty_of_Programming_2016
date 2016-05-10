@@ -2,7 +2,7 @@
 import httplib, urllib, base64, core_1hop, os, signal
 def problem_0(id1, id2, n1, n2):
     t1 = core_1hop.getdata(n1)["entities"][0]
-    print t1
+    #print t1
     for rid in t1["RId"]:
         if (rid == id2):
             return 1
@@ -18,7 +18,7 @@ def problem_1(id1, id2, n1, n2):
     return 0
 
 def problem_2(id1, id2, n1, n2):
-    print id1, id2, n1, n2
+    #print id1, id2, n1, n2
     return problem_1(id2, id1, n2, n1)
 
 def problem_3(id1, id2, n1, n2):
@@ -50,10 +50,10 @@ def calc(id1, id2, problem_type):
 ####################################
 def main(id1, id2):
     problem_type = core_1hop.check_probleam_type(id1, id2)
-    print "problem_type", problem_type
+    #print "problem_type", problem_type
     if (problem_type == -1): return []
     stage_ans = calc(id1, id2, problem_type)
-    print "Stage Ans for 1hop:", stage_ans
+    #print "Stage Ans for 1hop:", stage_ans
     if (stage_ans == 1):
         return [[id1, id2]]
     else:

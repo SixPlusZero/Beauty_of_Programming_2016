@@ -31,11 +31,11 @@ def handle_request():
                 conn.close()
                 break
             except Exception as e:
-                #print("[Errno {0}] {1}".format(e.errno, e.strerror))
-                print params_str
+                ##print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                #print params_str
                 continue
 
-        #print data
+        ##print data
         #return json.loads(data)
         datapool[target] = json.loads(data)
         q.task_done()
