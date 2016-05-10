@@ -28,40 +28,16 @@ def G2_G2_1(entity1, entity2, num1, num2):
     ret_list_3hop_G2_G2_1 = []
 
     Id1_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity1)
-    Id1_FCJ_Id = {}
-    for i in range(len(Id1_FCJ)):
-        calc_3hop_utils.send_request(
-            {"expr":('Composite(F.FId=%d)' % Id1_FCJ[i]),"target":("G2_G2_1_FCJ_Id_F_%d" % i)})
-        calc_3hop_utils.send_request(
-            {"expr":('Composite(C.CId=%d)' % Id1_FCJ[i]),"target":("G2_G2_1_FCJ_Id_C_%d" % i)})
-        calc_3hop_utils.send_request(
-            {"expr":('Composite(J.JId=%d)' % Id1_FCJ[i]),"target":("G2_G2_1_FCJ_Id_J_%d" % i)})
-            
-    for i in range(len(Id1_FCJ)):
-        FCJ = Id1_FCJ[i]
-        FCJ_Id = \
-        [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_1_FCJ_Id_F_%d" % i)["entities"]] + \
-        [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_1_FCJ_Id_C_%d" % i)["entities"]] + \
-        [entity["Id"] for entity in calc_3hop_utils.getdata("G2_G2_1_FCJ_Id_J_%d" % i)["entities"]]
-        for new_Id in FCJ_Id:
-            if Id1_FCJ_Id.has_key(new_Id) == False:
-                Id1_FCJ_Id[new_Id] = []
-            Id1_FCJ_Id[new_Id].append(FCJ)
+    calc_3hop_utils.send_request({"expr":('RId=%d' % num2), "target":"G2_G2_1_Id_RingId"})
+    Id_RingId_entities = [entity for entity in calc_3hop_utils.getdata("G2_G2_1_Id_RingId")["entities"]]
+    
+    for entity in Id_RingId_entities:
+        RingId_FCJ = calc_3hop_utils.FCJ_by_IdEntity(entity)
+        RingId = entity["Id"]
+        FCJ_intersection = list(set(RingId_FCJ).intersection(set(Id1_FCJ)))
+        for method_id in FCJ_intersection:
+            ret_list_3hop_G2_G2_1.append([num1, method_id, RingId, num2])
 
-    Id1_FCJ_Id_keys = Id1_FCJ_Id.keys()
-    for i in range(len(Id1_FCJ_Id_keys)):
-        calc_3hop_utils.send_request(
-            {"expr":('Id=%d' % Id1_FCJ_Id_keys[i]), "target":("G2_G2_1_final_RId_list_%d" % i)})
-    for i in range(len(Id1_FCJ_Id_keys)):
-        new_Id = Id1_FCJ_Id_keys[i]
-        try:
-            final_RId_list = calc_3hop_utils.getdata("G2_G2_1_final_RId_list_%d" % i)["entities"][0]["RId"]
-            for final_RId in final_RId_list:
-                if final_RId == num2:
-                    for Id1_FCJ in Id1_FCJ_Id[new_Id]:
-                        ret_list_3hop_G2_G2_1.append([num1, Id1_FCJ, new_Id, num2])
-        except:
-            continue
     print "G2_G2_1 finished"
 
 def G2_G2_2(entity1, entity2, num1, num2):
