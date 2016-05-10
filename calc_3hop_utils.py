@@ -2,9 +2,9 @@
 import httplib, urllib, base64
 import json
 import threading
-import time
 from Queue import Queue
 
+queue_num = 5
 max_request_num = 200
 
 datapool = {}
@@ -13,9 +13,9 @@ headers = {
     'Ocp-Apim-Subscription-Key': 'f7cc29509a8443c5b3a5e56b0e38b5a6',
 }
 
-def doWork():
+def doWork(idx):
     while True:
-        bundle = q.get()
+        bundle = q[idx].get()
         
         expr = bundle["expr"]
         target = bundle["target"]
@@ -44,7 +44,7 @@ def doWork():
         #return json.loads(data)
         datapool[target] = json.loads(data)
 
-        q.task_done()
+        q[idx].task_done()
 
 def FCJ_by_IdEntity(entity):
     Id_FCJ = []
@@ -60,19 +60,18 @@ def clear_datapool():
     global datapool
     datapool = {}
 
-def getdata(datakey):
-    #q.join()
-    while not datapool.has_key(datakey):
-        time.sleep(0)
+def getdata(datakey, idx):
+    q[idx].join()
     return datapool[datakey]
 
-q = Queue(max_request_num * 2)
-for i in range(max_request_num):
-    t = threading.Thread(target=doWork)
+#q = Queue(max_request_num * 2)
+q = [Queue(max_request_num * 2) for i in range(queue_num)]
+for i in range(max_request_num * queue_num):
+    t = threading.Thread(target=doWork, args=[i % queue_num])
     t.start()
 
-def send_request(bundle):
-    q.put(bundle)
+def send_request(bundle, idx):
+    q[idx].put(bundle)
 
 def unique_list(origin_list):
     new_list = []
