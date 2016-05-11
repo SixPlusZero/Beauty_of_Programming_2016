@@ -20,7 +20,7 @@ class BOPRequest(Resource):
         #print "id1@\t", id1
         #print "id2@\t", id2
         #cgiResult = main.request(id1, id2)
-        cgiResult = prints.request(id1, id2)
+        cgiResult = main.request(id1, id2)
         #print "CGIResult: #" + str(cgiResult) + "#"
         #if type(cgiResult) != type(""):
         #    return json.dumps(cgiResult)
