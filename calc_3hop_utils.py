@@ -86,7 +86,7 @@ def send_request(bundle):
 
 def send_RId_request(RId, CC, attributes, target):
     idx = 0
-    count = 50
+    count = 1000
     ret_list = []
     while idx < CC:
         for_times = 0
