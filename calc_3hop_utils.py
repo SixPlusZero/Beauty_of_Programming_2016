@@ -42,7 +42,7 @@ def doWork():
 
         while True:
             try:
-                conn = httplib.HTTPSConnection('oxfordhk.azure-api.net', timeout=5)
+                conn = httplib.HTTPSConnection('oxfordhk.azure-api.net', timeout=10)
                 conn.request("GET", "/academic/v1.0/evaluate?%s" % params_str, "{body}", headers)
                 response = conn.getresponse()
                 data = response.read()
@@ -86,7 +86,7 @@ def send_request(bundle):
 
 def send_RId_request(RId, CC, attributes, target):
     idx = 0
-    count = 2000
+    count = 1000
     ret_list = []
     while idx < CC:
         for_times = 0
