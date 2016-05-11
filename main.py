@@ -13,17 +13,17 @@ ret_list_2hop = []
 ret_list_3hop = []
 
 def wrapper_1hop(id1, id2):
-	global ret_list_1hop
-	ret_list_1hop = calc_1hop.main(id1, id2)
+    global ret_list_1hop
+    ret_list_1hop = calc_1hop.main(id1, id2)
 
 def wrapper_2hop(id1, id2):
-	global ret_list_2hop
-	ret_list_2hop = calc_2hop.main(id1, id2)
+    global ret_list_2hop
+    ret_list_2hop = calc_2hop.main(id1, id2)
 
 
 def wrapper_3hop(id1, id2):
-	global ret_list_3hop
-	ret_list_3hop = calc_3hop.calc(id1, id2)
+    global ret_list_3hop
+    ret_list_3hop = calc_3hop.calc(id1, id2)
 
 def request(arg1, arg2):
 
@@ -51,5 +51,5 @@ def request(arg1, arg2):
     #print ret_list_2hop
     #print "ret_list_3hop:"
     #print ret_list_3hop
-	print "########",ret_list_1hop + ret_list_2hop + ret_list_3hop
+    print "########",ret_list_1hop + ret_list_2hop + ret_list_3hop
     return ret_list_1hop + ret_list_2hop + ret_list_3hop
