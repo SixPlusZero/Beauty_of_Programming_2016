@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 import subprocess
 import json
 import main
+import prints
 
 app = Flask(__name__)
 api = Api(app)
@@ -15,10 +16,11 @@ class BOPRequest(Resource):
     def get(self):
         args = parser.parse_args()
         id1 = args['id1']
-        id2 = args['id2'] 
+        id2 = args['id2']
         #print "id1@\t", id1
         #print "id2@\t", id2
-        cgiResult = main.request(id1, id2)
+        #cgiResult = main.request(id1, id2)
+        cgiResult = prints.request(id1, id2)
         #print "CGIResult: #" + str(cgiResult) + "#"
         #if type(cgiResult) != type(""):
         #    return json.dumps(cgiResult)
