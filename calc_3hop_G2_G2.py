@@ -97,7 +97,7 @@ def G2_G2_3(entity1, entity2, num1, num2):
 
     for Id in Id_intersection:
         for RId in Id1_RId_RId[Id]:
-            ret_list_3hop_G2_G3_3.append([num1, RId, Id, num2])
+            ret_list_3hop_G2_G2_3.append([num1, RId, Id, num2])
     print "G2_G2_3 finished"
 
 def G2_G2_4(entity1, entity2, num1, num2):
@@ -155,7 +155,7 @@ def G2_G2_5(entity1, entity2, num1, num2):
 
     for Id in Id_intersection:
         for RId in Id1_AuId_Id[Id]:
-            ret_list_3hop_G2_G3_5.append([num1, RId, Id, num2])
+            ret_list_3hop_G2_G2_5.append([num1, RId, Id, num2])
 
     print "G2_G2_5 finished"
 
