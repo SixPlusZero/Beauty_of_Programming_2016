@@ -18,12 +18,25 @@ def doWork():
         
         expr = bundle["expr"]
         target = bundle["target"]
+        
+        attributes = 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId,CC'
+        if bundle.has_key("attributes"):
+            attributes = bundle["attributes"]
+
+        count = '1000000'
+        if bundle.has_key("count"):
+            count = bundle["count"]
+
+        offset = '0'
+        if bundle.has_key("offset"):
+            offset = bundle["offset"]
+
         params_str = urllib.urlencode({
-            'expr': str(expr),
-            'count': '1000000',
-            'offset': '0',
+            'expr': expr,
+            'count': count,
+            'offset': offset,
 #            'orderby': 'Id:asc',
-            'attributes': 'Id,F.FId,C.CId,J.JId,AA.AuId,AA.AfId,RId'
+            'attributes': attributes
         })
         data = []
 
@@ -63,13 +76,33 @@ def getdata(datakey):
     q.join()
     return datapool[datakey]
 
-q = Queue(max_request_num * 2)
+q = Queue(max_request_num * 3)
 for i in range(max_request_num):
     t = threading.Thread(target=doWork)
     t.start()
 
 def send_request(bundle):
     q.put(bundle)
+
+def send_RId_request(RId, CC, attributes, target):
+    idx = 0
+    ret_list = []
+    while idx < CC:
+        for_times = 0
+        for i in range(max_request_num):
+            send_request({"expr":('RId=%d' % RId), \
+                          "target": "send_RId_request_" + str(i + idx) + target, \
+                          "count": "500", \
+                          "offset": ("%d" % (i * 500 + idx)), \
+                          "attributes": attributes})
+            for_times += 1
+            if (i + 1) * 500 + idx > CC:
+                break
+        for i in range(for_times):
+            #print json.dumps(getdata("send_RId_request_" + str(i + idx) + target))
+            ret_list += getdata("send_RId_request_" + str(i + idx) + target)["entities"]
+        idx += for_times * 500
+    return ret_list
 
 def unique_list(origin_list):
     new_list = []
