@@ -177,10 +177,10 @@ def G2_G2(entity1, entity2, num1, num2):
     t_hop3_G2_G2_5 = threading.Thread(target=G2_G2_5,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_5.start()
 
-    t_hop3_G2_G2_1.join(0)
-    t_hop3_G2_G2_2.join(0)
-    t_hop3_G2_G2_3.join(0)
-    t_hop3_G2_G2_4.join(0)
+    t_hop3_G2_G2_1.join(60)
+    t_hop3_G2_G2_2.join(60)
+    t_hop3_G2_G2_3.join(60)
+    t_hop3_G2_G2_4.join(60)
     t_hop3_G2_G2_5.join(60)
     print '[3hop] timeout'
 
