@@ -197,8 +197,15 @@ def G2_G2(entity1, entity2, num1, num2):
     print calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_5)
     '''
 
+    '''
     return calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_1) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_2) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_3) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_4) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G2_5)
+    '''
+    return ret_list_3hop_G2_G2_1 + \
+           ret_list_3hop_G2_G2_2 + \
+           ret_list_3hop_G2_G2_3 + \
+           ret_list_3hop_G2_G2_4 + \
+           ret_list_3hop_G2_G2_5

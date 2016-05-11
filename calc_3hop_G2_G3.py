@@ -205,7 +205,13 @@ def G2_G3(entity1, entity2, num1, num2, reverse_out):
     t_hop3_G2_G3_3.join(60)
     t_hop3_G2_G3_4.join(60)
 
+    '''
     return calc_3hop_utils.unique_list(ret_list_3hop_G2_G3_1) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G3_2) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G3_3) + \
            calc_3hop_utils.unique_list(ret_list_3hop_G2_G3_4)
+    '''
+    return ret_list_3hop_G2_G3_1 + \
+           ret_list_3hop_G2_G3_2 + \
+           ret_list_3hop_G2_G3_3 + \
+           ret_list_3hop_G2_G3_4
