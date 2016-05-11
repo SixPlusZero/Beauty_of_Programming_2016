@@ -86,22 +86,24 @@ def send_request(bundle):
 
 def send_RId_request(RId, CC, attributes, target):
     idx = 0
+    count = 50
     ret_list = []
     while idx < CC:
         for_times = 0
         for i in range(max_request_num):
             send_request({"expr":('RId=%d' % RId), \
                           "target": "send_RId_request_" + str(i + idx) + target, \
-                          "count": "500", \
-                          "offset": ("%d" % (i * 500 + idx)), \
+                          "count": ("%d" % count), \
+                          "offset": ("%d" % (i * count + idx)), \
                           "attributes": attributes})
             for_times += 1
-            if (i + 1) * 500 + idx > CC:
+            if (i + 1) * count + idx > CC:
                 break
         for i in range(for_times):
             #print json.dumps(getdata("send_RId_request_" + str(i + idx) + target))
             ret_list += getdata("send_RId_request_" + str(i + idx) + target)["entities"]
-        idx += for_times * 500
+        idx += for_times * count
+    print "send_RId_request: %d times" % idx
     return ret_list
 
 def unique_list(origin_list):
