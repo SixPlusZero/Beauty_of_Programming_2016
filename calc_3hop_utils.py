@@ -49,7 +49,7 @@ def doWork():
                 conn.close()
                 break
             except Exception as e:
-                print("[Errno {0}] {1}".format(e.errno, e.strerror))
+                #print("[Errno {0}] {1}".format(e.errno, e.strerror))
                 #print params_str
                 continue
 
@@ -103,7 +103,7 @@ def send_RId_request(RId, CC, attributes, target):
             #print json.dumps(getdata("send_RId_request_" + str(i + idx) + target))
             ret_list += getdata("send_RId_request_" + str(i + idx) + target)["entities"]
         idx += for_times * count
-    print "send_RId_request: %d times" % idx
+    #print "send_RId_request: %d times" % idx
     return ret_list
 
 def unique_list(origin_list):

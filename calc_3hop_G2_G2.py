@@ -40,7 +40,7 @@ def G2_G2_1(entity1, entity2, num1, num2):
         for method_id in FCJ_intersection:
             ret_list_3hop_G2_G2_1.append([num1, method_id, RingId, num2])
 
-    print "G2_G2_1 finished"
+    #print "G2_G2_1 finished"
 
 def G2_G2_2(entity1, entity2, num1, num2):
     # G2->G2->G1->G2: Id -> (RId AND F/C/J) <- Id' (intersecting F/C/J)
@@ -67,7 +67,7 @@ def G2_G2_2(entity1, entity2, num1, num2):
         for RId in Id1_RId_FCJ[method_id]:
             ret_list_3hop_G2_G2_2.append([num1, RId, method_id, num2])
 
-    print "G2_G2_2 finished"
+    #print "G2_G2_2 finished"
 
 def G2_G2_3(entity1, entity2, num1, num2):
     # G2->G2->G2->G2: Id -> (RId AND RId') <- Id' (intersecting RId)
@@ -98,7 +98,7 @@ def G2_G2_3(entity1, entity2, num1, num2):
     for Id in Id_intersection:
         for RId in Id1_RId_RId[Id]:
             ret_list_3hop_G2_G2_3.append([num1, RId, Id, num2])
-    print "G2_G2_3 finished"
+    #print "G2_G2_3 finished"
 
 def G2_G2_4(entity1, entity2, num1, num2):
     # G2->G2->G3->G2: Id -> (RId AND AuId) <- Id' (intersecting AuId)
@@ -128,7 +128,7 @@ def G2_G2_4(entity1, entity2, num1, num2):
     for AuId in AuId_intersection:
         for RId in Id1_RId_AuId[AuId]:
             ret_list_3hop_G2_G2_4.append([num1, RId, AuId, num2])
-    print "G2_G2_4 finished"
+    #print "G2_G2_4 finished"
 
 def G2_G2_5(entity1, entity2, num1, num2):
     # G2->G3->G2->G2: Id -> (AuId AND RId) <- Id' (intersecting AuId)
@@ -157,14 +157,14 @@ def G2_G2_5(entity1, entity2, num1, num2):
         for RId in Id1_AuId_Id[Id]:
             ret_list_3hop_G2_G2_5.append([num1, RId, Id, num2])
 
-    print "G2_G2_5 finished"
+    #print "G2_G2_5 finished"
 
 def G2_G2(entity1, entity2, num1, num2):
     '''
     Id1_FCJ, Id1_RId_FCJ, Id1_RId, Id1_RId_AuId, Id1_AuId
     Id2_RId_FCJ, Id2_FCJ, Id2_RId_RId, Id2_AuId, Id2_RId_AuId
     '''
-    print "G2_G2"
+    #print "G2_G2"
 
     t_hop3_G2_G2_1 = threading.Thread(target=G2_G2_1,args=(entity1, entity2, num1, num2))
     t_hop3_G2_G2_1.start()
@@ -182,7 +182,7 @@ def G2_G2(entity1, entity2, num1, num2):
     t_hop3_G2_G2_3.join(60)
     t_hop3_G2_G2_4.join(60)
     t_hop3_G2_G2_5.join(60)
-    print '[3hop] timeout'
+    #print '[3hop] timeout'
 
     '''
     print "ret_list_3hop_G2_G2_1"
